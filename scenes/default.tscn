@@ -44,9 +44,9 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 32.0
-offset_top = 132.0
+offset_top = 140.0
 offset_right = 224.0
-offset_bottom = 164.0
+offset_bottom = 172.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 3
@@ -97,7 +97,6 @@ position = Vector2(96, 0)
 texture = ExtResource("2_7vjpr")
 
 [node name="HoldLabel" type="Label" parent="CardContainer/Card3" unique_id=181660337]
-visible = false
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -148,6 +147,22 @@ offset_bottom = -25.0
 grow_horizontal = 2
 theme_override_fonts/font = ExtResource("3_nvwnn")
 text = "HOLD"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HandLabel" type="Label" parent="." unique_id=1854888165]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(81.615, 0)
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 12.0
+offset_top = 86.0
+offset_right = 244.0
+offset_bottom = 99.0
+grow_horizontal = 2
+size_flags_horizontal = 10
+theme_override_fonts/font = ExtResource("3_nvwnn")
+text = "HandLabel"
 horizontal_alignment = 1
 vertical_alignment = 1
 
