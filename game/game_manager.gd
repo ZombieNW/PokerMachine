@@ -44,6 +44,7 @@ func new_cards():
 		# Get new card
 		cards[i] = DeckInstance.get_card()
 	refresh_card_textures()
+	print(PokerHandEvaluator.evaluate_hand(cards).name)
 
 # Get card texture file from card name string
 func get_card_texture(card_name: String) -> Texture:
