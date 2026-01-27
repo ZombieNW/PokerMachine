@@ -4,6 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://dhdwr17v841pc" path="res://assets/kenney_playing-cards-pack/card_back.png" id="2_7vjpr"]
 [ext_resource type="Script" uid="uid://dbvkhbhf3a3yn" path="res://game/game_manager.gd" id="2_ya6ni"]
 [ext_resource type="FontFile" uid="uid://u4y1ab2wxs1d" path="res://assets/fonts/m5x7.ttf" id="3_nvwnn"]
+[ext_resource type="FontFile" uid="uid://bwnbbjh76bptd" path="res://assets/fonts/m3x6.ttf" id="5_6y2o2"]
+[ext_resource type="StyleBox" uid="uid://bl6tb0bieynlp" path="res://assets/pricetables/blue_panel.tres" id="5_xprms"]
+[ext_resource type="StyleBox" uid="uid://cd7dbc2w6wypx" path="res://assets/pricetables/red_panel.tres" id="7_wdrtm"]
+[ext_resource type="Texture2D" uid="uid://ch31kk8jvb2gd" path="res://assets/game_over.png" id="8_wdrtm"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7vjpr"]
 texture = ExtResource("1_e232d")
@@ -18,46 +22,409 @@ tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAABAAEAAAAAAAA
 tile_set = SubResource("TileSet_nvwnn")
 script = ExtResource("2_ya6ni")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=2033942536]
+[node name="TitleLabel" type="Label" parent="." unique_id=1976251904]
+custom_minimum_size = Vector2(81.615, 0)
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 12.0
+offset_top = 4.0
+offset_right = 244.0
+offset_bottom = 17.0
+grow_horizontal = 2
+size_flags_horizontal = 10
+theme_override_fonts/font = ExtResource("3_nvwnn")
+text = "Zach's Funny Poker"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CardContainer" type="HBoxContainer" parent="." unique_id=2033942536]
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 32.0
-offset_top = 144.0
+offset_top = 132.0
 offset_right = 224.0
-offset_bottom = 176.0
+offset_bottom = 164.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 3
 alignment = 1
 
-[node name="Card1" type="Sprite2D" parent="HBoxContainer" unique_id=767906507]
+[node name="Card1" type="Sprite2D" parent="CardContainer" unique_id=767906507]
 unique_name_in_owner = true
 texture = ExtResource("2_7vjpr")
 
-[node name="Card2" type="Sprite2D" parent="HBoxContainer" unique_id=492045752]
+[node name="HoldLabel" type="Label" parent="CardContainer/Card1" unique_id=446956190]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -52.0
+offset_top = -48.0
+offset_right = -12.0
+offset_bottom = -25.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("3_nvwnn")
+text = "HOLD"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Card2" type="Sprite2D" parent="CardContainer" unique_id=492045752]
 unique_name_in_owner = true
 position = Vector2(48, 0)
 texture = ExtResource("2_7vjpr")
 
-[node name="Card3" type="Sprite2D" parent="HBoxContainer" unique_id=1758767465]
+[node name="HoldLabel" type="Label" parent="CardContainer/Card2" unique_id=1716041818]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -52.0
+offset_top = -48.0
+offset_right = -12.0
+offset_bottom = -25.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("3_nvwnn")
+text = "HOLD"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Card3" type="Sprite2D" parent="CardContainer" unique_id=1758767465]
 unique_name_in_owner = true
 position = Vector2(96, 0)
 texture = ExtResource("2_7vjpr")
 
-[node name="Card4" type="Sprite2D" parent="HBoxContainer" unique_id=1797435755]
+[node name="HoldLabel" type="Label" parent="CardContainer/Card3" unique_id=181660337]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -52.0
+offset_top = -48.0
+offset_right = -12.0
+offset_bottom = -25.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("3_nvwnn")
+text = "HOLD"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Card4" type="Sprite2D" parent="CardContainer" unique_id=1797435755]
 unique_name_in_owner = true
 position = Vector2(144, 0)
 texture = ExtResource("2_7vjpr")
 
-[node name="Card5" type="Sprite2D" parent="HBoxContainer" unique_id=617112430]
+[node name="HoldLabel" type="Label" parent="CardContainer/Card4" unique_id=1525834992]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -52.0
+offset_top = -48.0
+offset_right = -12.0
+offset_bottom = -25.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("3_nvwnn")
+text = "HOLD"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Card5" type="Sprite2D" parent="CardContainer" unique_id=617112430]
 unique_name_in_owner = true
 position = Vector2(192, 0)
 texture = ExtResource("2_7vjpr")
 
-[node name="Label" type="Label" parent="." unique_id=2064427043]
-offset_right = 128.75
-offset_bottom = 23.0
+[node name="HoldLabel" type="Label" parent="CardContainer/Card5" unique_id=1451411207]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -52.0
+offset_top = -48.0
+offset_right = -12.0
+offset_bottom = -25.0
+grow_horizontal = 2
 theme_override_fonts/font = ExtResource("3_nvwnn")
-text = "Funny Poker"
+text = "HOLD"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CreditContainer" type="HBoxContainer" parent="." unique_id=588009567]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 172.0
+offset_right = 244.0
+offset_bottom = 185.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="BetLabel" type="Label" parent="CreditContainer" unique_id=2064427043]
+custom_minimum_size = Vector2(81.615, 0)
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_fonts/font = ExtResource("3_nvwnn")
+text = "Bet 1"
+vertical_alignment = 1
+
+[node name="CreditLabel" type="Label" parent="CreditContainer" unique_id=1962901909]
+custom_minimum_size = Vector2(81.615, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_fonts/font = ExtResource("3_nvwnn")
+text = "Credits 100"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="PriceTable" type="GridContainer" parent="." unique_id=294860843]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 18.0
+offset_right = 244.0
+offset_bottom = 88.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 6
+
+[node name="HandPanel" type="Panel" parent="PriceTable" unique_id=1398277652]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("5_xprms")
+
+[node name="MarginContainer" type="MarginContainer" parent="PriceTable/HandPanel" unique_id=194337535]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = -4.0
+offset_right = 27.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="PriceTable/HandPanel/MarginContainer" unique_id=1965861119]
+z_index = 5
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/line_spacing = -6
+theme_override_fonts/font = ExtResource("5_6y2o2")
+text = "Royal Flush
+Straight Flush
+4 of a Kind
+Full House
+Flush
+Straight
+3 of a Kind
+2 Pair
+Jacks or Better"
+vertical_alignment = 1
+
+[node name="CreditPanel1" type="Panel" parent="PriceTable" unique_id=374392308]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("5_xprms")
+
+[node name="MarginContainer" type="MarginContainer" parent="PriceTable/CreditPanel1" unique_id=994590925]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -21.0
+offset_top = -36.0
+offset_right = -6.0
+offset_bottom = 33.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="PriceTable/CreditPanel1/MarginContainer" unique_id=822155934]
+z_index = 5
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/line_spacing = -6
+theme_override_fonts/font = ExtResource("5_6y2o2")
+text = "250
+50
+25
+9
+6
+4
+3
+2
+1"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CreditPanel2" type="Panel" parent="PriceTable" unique_id=138778542]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("5_xprms")
+
+[node name="MarginContainer" type="MarginContainer" parent="PriceTable/CreditPanel2" unique_id=199384565]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -36.0
+offset_right = -5.0
+offset_bottom = 33.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="PriceTable/CreditPanel2/MarginContainer" unique_id=1690747959]
+z_index = 5
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_constants/line_spacing = -6
+theme_override_fonts/font = ExtResource("5_6y2o2")
+text = "500
+100
+50
+18
+12
+8
+6
+4
+2"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CreditPanel3" type="Panel" parent="PriceTable" unique_id=595321468]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("5_xprms")
+
+[node name="MarginContainer" type="MarginContainer" parent="PriceTable/CreditPanel3" unique_id=943043815]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -36.0
+offset_right = -4.0
+offset_bottom = 33.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="PriceTable/CreditPanel3/MarginContainer" unique_id=656612290]
+z_index = 5
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_constants/line_spacing = -6
+theme_override_fonts/font = ExtResource("5_6y2o2")
+text = "750
+150
+75
+27
+18
+12
+9
+6
+3"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CreditPanel4" type="Panel" parent="PriceTable" unique_id=1391432485]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("5_xprms")
+
+[node name="MarginContainer" type="MarginContainer" parent="PriceTable/CreditPanel4" unique_id=1821402515]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -36.0
+offset_right = -4.0
+offset_bottom = 33.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="PriceTable/CreditPanel4/MarginContainer" unique_id=1719627167]
+z_index = 5
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_constants/line_spacing = -6
+theme_override_fonts/font = ExtResource("5_6y2o2")
+text = "1000
+200
+100
+36
+24
+16
+12
+8
+4"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="CreditPanel5" type="Panel" parent="PriceTable" unique_id=1930357177]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("7_wdrtm")
+
+[node name="MarginContainer" type="MarginContainer" parent="PriceTable/CreditPanel5" unique_id=1758937847]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -36.0
+offset_right = -4.0
+offset_bottom = 33.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="PriceTable/CreditPanel5/MarginContainer" unique_id=2099379302]
+z_index = 5
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_constants/line_spacing = -6
+theme_override_fonts/font = ExtResource("5_6y2o2")
+text = "4000
+250
+125
+45
+30
+20
+15
+10
+5"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="GameOver" type="Sprite2D" parent="." unique_id=283416278]
+visible = false
+z_index = 10
+position = Vector2(128, 96)
+texture = ExtResource("8_wdrtm")

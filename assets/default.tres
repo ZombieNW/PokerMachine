@@ -1,0 +1,10 @@
+[gd_resource type="Theme" format=3 uid="uid://hn4y2jqemc3c"]
+
+[ext_resource type="FontFile" uid="uid://u4y1ab2wxs1d" path="res://assets/fonts/m5x7.ttf" id="1_c8gvj"]
+
+[resource]
+default_font = ExtResource("1_c8gvj")
+Label/colors/font_shadow_color = Color(0, 0, 0, 1)
+Label/constants/shadow_offset_x = 1
+Label/constants/shadow_offset_y = 1
+Label/constants/shadow_outline_size = 1
