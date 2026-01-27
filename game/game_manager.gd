@@ -2,14 +2,13 @@ extends TileMapLayer
 
 const DeckScript = preload("uid://bdo7l5yfgwr6q")
 
-var DeckInstance
+var DeckInstance = DeckScript.new()
 
 var cards: Array[String] = ["", "", "", "", ""]
 var held: Array[int] = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	DeckInstance = DeckScript.new()
 	new_cards()
 
 func _input(event: InputEvent) -> void:
