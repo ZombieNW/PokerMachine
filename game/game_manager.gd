@@ -43,6 +43,12 @@ func new_cards():
 		# Get new card
 		cards[i] = DeckInstance.get_card()
 	refresh_card_textures()
+	
+	var hand_result = PokerHandEvaluator.evaluate_hand(cards)
+	enable_hand_label(hand_result.name)
+
+func enable_hand_label(text: String) -> void:
+	%HandLabel.show()
 	%HandLabel.text = PokerHandEvaluator.evaluate_hand(cards).name
 
 # Get card texture file from card name string

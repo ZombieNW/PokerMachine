@@ -152,6 +152,7 @@ vertical_alignment = 1
 
 [node name="HandLabel" type="Label" parent="." unique_id=1854888165]
 unique_name_in_owner = true
+visible = false
 custom_minimum_size = Vector2(81.615, 0)
 anchors_preset = 10
 anchor_right = 1.0
