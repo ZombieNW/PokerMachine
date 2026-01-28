@@ -1,6 +1,6 @@
 extends Node
 
-var deck = [
+const standard_deck_preset = [
 	"hearts_A",
 	"hearts_02",
 	"hearts_03",
@@ -55,9 +55,19 @@ var deck = [
 	"spades_K"
 ]
 
+var deck: Array = []
+
 func get_card() -> String:
+	if deck.is_empty():
+		push_error("Deck is empty!")
+		return ""
 	var random_index = randi_range(0, deck.size() - 1)
 	return deck.pop_at(random_index)
 
+func reset_deck() -> void:
+	deck = standard_deck_preset.duplicate()
+
 func return_card(card_name: String) -> void:
+	if card_name == "back" or card_name == "":
+		return
 	deck.append(card_name)
