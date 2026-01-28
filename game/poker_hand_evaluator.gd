@@ -13,6 +13,29 @@ enum HandRank {
 	ROYAL_FLUSH
 }
 
+const PAYOUT_TABLE = {
+	HandRank.ROYAL_FLUSH:     [250, 500, 750, 1000, 4000],
+	HandRank.STRAIGHT_FLUSH:  [50, 100, 150, 200, 250],
+	HandRank.FOUR_OF_A_KIND:  [25, 50, 75, 100, 125],
+	HandRank.FULL_HOUSE:      [9, 18, 27, 36, 45],
+	HandRank.FLUSH:           [6, 12, 18, 24, 30],
+	HandRank.STRAIGHT:        [4, 8, 12, 16, 20],
+	HandRank.THREE_OF_A_KIND: [3, 6, 9, 12, 15],
+	HandRank.TWO_PAIR:        [2, 4, 6, 8, 10],
+	HandRank.PAIR:            [1, 2, 3, 4, 5], # "Jacks or Better"
+	HandRank.HIGH_CARD:       [0, 0, 0, 0, 0]
+}
+
+static func get_payout(hand_result: HandRank, bet: int) -> int:
+	# Ensure hand exists
+	if not PAYOUT_TABLE.has(hand_result):
+		return 0
+	
+	# Clamp to array index
+	var column_index = clampi(bet - 1, 0, 4)
+	
+	return PAYOUT_TABLE[hand_result][column_index]
+
 static func evaluate_hand(cards: Array[String]) -> Dictionary:
 	var suits = []
 	var ranks = []
