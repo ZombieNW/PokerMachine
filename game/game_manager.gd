@@ -7,7 +7,7 @@ enum GameState { BET, INITIAL_DEAL, DRAW, EVALUATE, CREDITS}
 
 const DEFAULT_CARD_COUNT: int = 5
 const MAX_BET: int = 5
-const STARTING_CREDITS: int = 5
+const STARTING_CREDITS: int = 0
 const CARD_TEXTURE_PATH: String = "res://assets/kenney_playing-cards-pack/card_%s.png"
 
 var DeckInstance = DeckScript.new()
@@ -15,11 +15,12 @@ var cards: Array[String] = []
 var held: Array[int] = []
 var bet: int = 1
 var credits: int = STARTING_CREDITS
-var game_state: GameState = GameState.BET
+var game_state: GameState = GameState.CREDITS
 
 @onready var card_sprites: Array[Sprite2D] = [%Card1, %Card2, %Card3, %Card4, %Card5]
 
 func _ready() -> void:
+	update_state()
 	end_game()
 
 func _input(event: InputEvent) -> void:
