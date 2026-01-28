@@ -3,7 +3,7 @@ extends TileMapLayer
 const DeckScript = preload("uid://bdo7l5yfgwr6q")
 const PriceTableScript = preload("uid://depyceufqrs32")
 
-enum GameState { BET, INITIAL_DEAL, DRAW, EVALUATE}
+enum GameState { BET, INITIAL_DEAL, DRAW, EVALUATE, CREDITS}
 
 const DEFAULT_CARD_COUNT: int = 5
 const MAX_BET: int = 5
@@ -35,11 +35,13 @@ func _input(event: InputEvent) -> void:
 	elif event.is_action_pressed("bet"):
 		cycle_bet()
 		update_state()
+	elif event.is_action_pressed("add_credit"):
+		add_credit()
 
 # Start or reset a game
 func start_game() -> void:
 	if credits < bet:
-		# TODO INSUFFICIENT CREDITS
+		%HandLabel.text = "Insufficient Credits"
 		return
 	
 	%HandLabel.text = ""
@@ -50,6 +52,10 @@ func start_game() -> void:
 
 # After evaluation
 func end_game() -> void:
+	if credits <= 0:
+		out_of_credits()
+		return
+	
 	game_state = GameState.BET
 	cards.resize(DEFAULT_CARD_COUNT)
 	cards.fill("back")
@@ -73,6 +79,14 @@ func draw_cards() -> void:
 	new_cards()
 	game_state = GameState.EVALUATE
 	evaluate()
+	update_state()
+
+# add credit and escape no credit screen
+func add_credit():
+	credits += 1
+	if game_state == GameState.CREDITS:
+		%TitleContainer.hide()
+		game_state = GameState.BET
 	update_state()
 
 # Evaluate hand and payout
@@ -105,7 +119,12 @@ func update_state() -> void:
 	%PriceTable.set_price_panel(bet - 1)
 	%CreditLabel.text = "%d Credits" % credits
 	%BetLabel.text = "Bet %d" % bet
-	%TitleBetLabel.text = "Bet %d" % bet
+
+# Display game over screen when out of credits
+func out_of_credits() -> void:
+	game_state = GameState.CREDITS
+	%TitleContainer.show()
+	%TitleLabel.text = "Out of Credits"
 
 # Helper function to cycle bet in first stage
 func cycle_bet() -> void:
