@@ -3,11 +3,16 @@ extends TileMapLayer
 const DeckScript = preload("uid://bdo7l5yfgwr6q")
 const PriceTableScript = preload("uid://depyceufqrs32")
 
+const DEFAULT_CARD_COUNT: int = 5
+const MAX_BET: int = 5
+const STARTING_CREDITS: int = 5
+const CARD_TEXTURE_PATH: String = "res://assets/kenney_playing-cards-pack/card_%s.png"
+
 var DeckInstance = DeckScript.new()
 var cards: Array[String] = ["", "", "", "", ""]
 var held: Array[int] = []
 var bet: int = 1
-var credits: int = 5
+var credits: int = STARTING_CREDITS
 
 @onready var card_sprites: Array[Sprite2D] = [%Card1, %Card2, %Card3, %Card4, %Card5]
 
@@ -19,14 +24,14 @@ func _input(event: InputEvent) -> void:
 	# Hold Card
 	for i in range(cards.size()):
 		if event.is_action_pressed("hold_%d" % (i + 1)):
-			if held.has(i): held.erase(i)
-			else: held.append(i)
+			hold_card(i)
 			update_state()
+			return
 	
 	if event.is_action_pressed("ui_accept"):
 		new_cards()
 	elif event.is_action_pressed("bet"):
-		bet = (bet % 5) + 1
+		bet = (bet % MAX_BET) + 1
 		update_state()
 
 # Return cards in hand and get new cards
@@ -49,10 +54,14 @@ func update_state() -> void:
 	refresh_hold_labels()
 	refresh_card_textures()
 	%PriceTable.set_price_panel(bet - 1)
-	%HandLabel.text = PokerHandEvaluator.evaluate_hand(cards).name
-	%CreditLabel.text = str(credits) + " Credits"
-	%BetLabel.text = "Bet " + str(bet)
-	%TitleBetLabel.text = "Bet " + str(bet)
+	%CreditLabel.text = "%d Credits" % credits
+	%BetLabel.text = "Bet %d" % bet
+	%TitleBetLabel.text = "Bet %d" % bet
+	
+	if not cards.has("back"):
+		%HandLabel.text = PokerHandEvaluator.evaluate_hand(cards).name
+	else:
+		%HandLabel.text = ""
 
 func hold_card(card_index: int) -> void:
 	# TODO reject if not in initial deal game state
@@ -64,7 +73,7 @@ func hold_card(card_index: int) -> void:
 
 # Get card texture file from card name string
 func get_card_texture(card_name: String) -> Texture:
-	return load("res://assets/kenney_playing-cards-pack/card_" + card_name + ".png")
+	return load(CARD_TEXTURE_PATH % card_name)
 
 # Update card textures to reflect game cards
 func refresh_card_textures() -> void:
