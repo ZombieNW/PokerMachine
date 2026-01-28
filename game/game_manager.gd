@@ -20,10 +20,7 @@ var game_state: GameState = GameState.BET
 @onready var card_sprites: Array[Sprite2D] = [%Card1, %Card2, %Card3, %Card4, %Card5]
 
 func _ready() -> void:
-	cards.resize(DEFAULT_CARD_COUNT)
-	cards.fill("back")
-	%TitleContainer.show()
-	update_state()
+	end_game()
 
 func _input(event: InputEvent) -> void:
 	# Hold Card
@@ -45,12 +42,20 @@ func start_game() -> void:
 		# TODO INSUFFICIENT CREDITS
 		return
 	
-	%TitleContainer.hide()
+	%HandLabel.text = ""
 	credits -= bet
-	held.clear()
-	DeckInstance.reset_deck()
 	new_cards()
 	game_state = GameState.INITIAL_DEAL
+	update_state()
+
+# After evaluation
+func end_game() -> void:
+	game_state = GameState.BET
+	cards.resize(DEFAULT_CARD_COUNT)
+	cards.fill("back")
+	held.clear()
+	DeckInstance.reset_deck()
+	%HandLabel.text = "Place Your Bets"
 	update_state()
 
 # When deal/draw button pressed, essentially a "next"
@@ -61,14 +66,21 @@ func handle_deal_draw() -> void:
 		GameState.INITIAL_DEAL:
 			draw_cards()
 		GameState.EVALUATE:
-			start_game()
+			end_game()
 
 # The middle turn of the game
 func draw_cards() -> void:
 	new_cards()
 	game_state = GameState.EVALUATE
-	# evaluate()
+	evaluate()
 	update_state()
+
+# Evaluate hand and payout
+func evaluate() -> void:
+	var hand_result = PokerHandEvaluator.evaluate_hand(cards)
+	var payout = PokerHandEvaluator.get_payout(hand_result.rank, bet)
+	%HandLabel.text = hand_result.name
+	credits += payout
 
 # Return cards in hand and get new cards
 func new_cards():
@@ -94,15 +106,10 @@ func update_state() -> void:
 	%CreditLabel.text = "%d Credits" % credits
 	%BetLabel.text = "Bet %d" % bet
 	%TitleBetLabel.text = "Bet %d" % bet
-	
-	if not cards.has("back"):
-		%HandLabel.text = PokerHandEvaluator.evaluate_hand(cards).name
-	else:
-		%HandLabel.text = ""
 
 # Helper function to cycle bet in first stage
 func cycle_bet() -> void:
-	if game_state == GameState.BET or game_state == GameState.EVALUATE:
+	if game_state == GameState.BET:
 		bet = (bet % MAX_BET) + 1
 
 # Helper function to hold a card by index

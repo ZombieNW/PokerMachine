@@ -154,6 +154,7 @@ vertical_alignment = 1
 
 [node name="HandLabel" type="Label" parent="." unique_id=1854888165]
 unique_name_in_owner = true
+visible = false
 custom_minimum_size = Vector2(81.615, 0)
 anchors_preset = 10
 anchor_right = 1.0
@@ -164,7 +165,7 @@ offset_bottom = 99.0
 grow_horizontal = 2
 size_flags_horizontal = 10
 theme_override_fonts/font = ExtResource("3_nvwnn")
-text = "Place Your Bets"
+text = "HandLabel"
 horizontal_alignment = 1
 vertical_alignment = 1
 
