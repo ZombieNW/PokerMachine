@@ -56,6 +56,7 @@ func end_game() -> void:
 		out_of_credits()
 		return
 	
+	%TitleContainer.hide()
 	game_state = GameState.BET
 	cards.resize(DEFAULT_CARD_COUNT)
 	cards.fill("back")
@@ -85,8 +86,7 @@ func draw_cards() -> void:
 func add_credit():
 	credits += 1
 	if game_state == GameState.CREDITS:
-		%TitleContainer.hide()
-		game_state = GameState.BET
+		end_game()
 	update_state()
 
 # Evaluate hand and payout
