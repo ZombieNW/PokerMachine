@@ -5,10 +5,12 @@
 [ext_resource type="Script" uid="uid://dbvkhbhf3a3yn" path="res://game/game_manager.gd" id="2_ya6ni"]
 [ext_resource type="FontFile" uid="uid://u4y1ab2wxs1d" path="res://assets/fonts/m5x7.ttf" id="3_nvwnn"]
 [ext_resource type="FontFile" uid="uid://bwnbbjh76bptd" path="res://assets/fonts/m3x6.ttf" id="5_6y2o2"]
+[ext_resource type="Script" uid="uid://depyceufqrs32" path="res://game/price_table.gd" id="5_hvtui"]
 [ext_resource type="StyleBox" uid="uid://bl6tb0bieynlp" path="res://assets/pricetables/blue_panel.tres" id="5_xprms"]
 [ext_resource type="StyleBox" uid="uid://cd7dbc2w6wypx" path="res://assets/pricetables/red_panel.tres" id="7_wdrtm"]
 [ext_resource type="Texture2D" uid="uid://ch31kk8jvb2gd" path="res://assets/game_over.png" id="8_wdrtm"]
 [ext_resource type="AudioStream" uid="uid://by6tdfvkadtnt" path="res://assets/music.ogg" id="9_u4rra"]
+[ext_resource type="StyleBox" uid="uid://po1gdid4rvl" path="res://assets/pricetables/black_panel.tres" id="10_1grx1"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7vjpr"]
 texture = ExtResource("1_e232d")
@@ -180,6 +182,7 @@ grow_horizontal = 2
 grow_vertical = 0
 
 [node name="BetLabel" type="Label" parent="CreditContainer" unique_id=2064427043]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(81.615, 0)
 layout_mode = 2
 size_flags_horizontal = 2
@@ -188,6 +191,7 @@ text = "Bet 1"
 vertical_alignment = 1
 
 [node name="CreditLabel" type="Label" parent="CreditContainer" unique_id=1962901909]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(81.615, 0)
 layout_mode = 2
 size_flags_horizontal = 10
@@ -197,6 +201,7 @@ horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="PriceTable" type="GridContainer" parent="." unique_id=294860843]
+unique_name_in_owner = true
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -209,9 +214,10 @@ grow_vertical = 2
 theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0
 columns = 6
+script = ExtResource("5_hvtui")
 
 [node name="HandPanel" type="Panel" parent="PriceTable" unique_id=1398277652]
-custom_minimum_size = Vector2(64, 0)
+custom_minimum_size = Vector2(68, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -250,7 +256,7 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_styles/panel = ExtResource("5_xprms")
+theme_override_styles/panel = ExtResource("7_wdrtm")
 
 [node name="MarginContainer" type="MarginContainer" parent="PriceTable/CreditPanel1" unique_id=994590925]
 layout_mode = 1
@@ -405,7 +411,7 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_styles/panel = ExtResource("7_wdrtm")
+theme_override_styles/panel = ExtResource("5_xprms")
 
 [node name="MarginContainer" type="MarginContainer" parent="PriceTable/CreditPanel5" unique_id=1758937847]
 layout_mode = 1
@@ -449,3 +455,25 @@ texture = ExtResource("8_wdrtm")
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=255024648]
 stream = ExtResource("9_u4rra")
 autoplay = true
+
+[node name="TitleContainer" type="PanelContainer" parent="." unique_id=1340101410]
+z_index = 20
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 256.0
+offset_bottom = 192.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = ExtResource("10_1grx1")
+
+[node name="TitleBetLabel" type="Label" parent="TitleContainer" unique_id=683880391]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Bet 1"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -1,11 +1,15 @@
 extends TileMapLayer
 
 const DeckScript = preload("uid://bdo7l5yfgwr6q")
+const PriceTableScript = preload("uid://depyceufqrs32")
 
 var DeckInstance = DeckScript.new()
 
 var cards: Array[String] = ["", "", "", "", ""]
 var held: Array[int] = []
+
+var bet: int = 1
+var credits: int = 5
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -29,7 +33,9 @@ func _input(event: InputEvent) -> void:
 	elif event.is_action_pressed("hold_5"):
 		if held.has(4): held.erase(4)
 		else: held.append(4)
-	refresh_hold_labels()
+	elif event.is_action_pressed("bet"):
+		bet = (bet % 5) + 1
+	update_state()
 
 # Return cards in hand and get new cards (with option to hold back cards)
 func new_cards():
@@ -42,14 +48,16 @@ func new_cards():
 		
 		# Get new card
 		cards[i] = DeckInstance.get_card()
-	refresh_card_textures()
-	
-	var hand_result = PokerHandEvaluator.evaluate_hand(cards)
-	enable_hand_label(hand_result.name)
+	update_state()
 
-func enable_hand_label(text: String) -> void:
-	%HandLabel.show()
+func update_state() -> void:
+	refresh_hold_labels()
+	refresh_card_textures()
+	%PriceTable.set_price_panel(bet - 1)
 	%HandLabel.text = PokerHandEvaluator.evaluate_hand(cards).name
+	%CreditLabel.text = str(credits) + " Credits"
+	%BetLabel.text = "Bet " + str(bet)
+	%TitleBetLabel.text = "Bet " + str(bet)
 
 # Get card texture file from card name string
 func get_card_texture(card_name: String) -> Texture:
