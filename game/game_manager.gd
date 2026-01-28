@@ -3,22 +3,27 @@ extends TileMapLayer
 const DeckScript = preload("uid://bdo7l5yfgwr6q")
 const PriceTableScript = preload("uid://depyceufqrs32")
 
+enum GameState { BET, INITIAL_DEAL, DRAW, EVALUATE}
+
 const DEFAULT_CARD_COUNT: int = 5
 const MAX_BET: int = 5
 const STARTING_CREDITS: int = 5
 const CARD_TEXTURE_PATH: String = "res://assets/kenney_playing-cards-pack/card_%s.png"
 
 var DeckInstance = DeckScript.new()
-var cards: Array[String] = ["", "", "", "", ""]
+var cards: Array[String] = []
 var held: Array[int] = []
 var bet: int = 1
 var credits: int = STARTING_CREDITS
+var game_state: GameState = GameState.BET
 
 @onready var card_sprites: Array[Sprite2D] = [%Card1, %Card2, %Card3, %Card4, %Card5]
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	new_cards()
+	cards.resize(DEFAULT_CARD_COUNT)
+	cards.fill("back")
+	%TitleContainer.show()
+	update_state()
 
 func _input(event: InputEvent) -> void:
 	# Hold Card
@@ -29,10 +34,41 @@ func _input(event: InputEvent) -> void:
 			return
 	
 	if event.is_action_pressed("ui_accept"):
-		new_cards()
+		handle_deal_draw()
 	elif event.is_action_pressed("bet"):
-		bet = (bet % MAX_BET) + 1
+		cycle_bet()
 		update_state()
+
+# Start or reset a game
+func start_game() -> void:
+	if credits < bet:
+		# TODO INSUFFICIENT CREDITS
+		return
+	
+	%TitleContainer.hide()
+	credits -= bet
+	held.clear()
+	DeckInstance.reset_deck()
+	new_cards()
+	game_state = GameState.INITIAL_DEAL
+	update_state()
+
+# When deal/draw button pressed, essentially a "next"
+func handle_deal_draw() -> void:
+	match game_state:
+		GameState.BET:
+			start_game()
+		GameState.INITIAL_DEAL:
+			draw_cards()
+		GameState.EVALUATE:
+			start_game()
+
+# The middle turn of the game
+func draw_cards() -> void:
+	new_cards()
+	game_state = GameState.EVALUATE
+	# evaluate()
+	update_state()
 
 # Return cards in hand and get new cards
 func new_cards():
@@ -50,6 +86,7 @@ func new_cards():
 			return
 		cards[i] = new_card
 
+# Update UI/Labels
 func update_state() -> void:
 	refresh_hold_labels()
 	refresh_card_textures()
@@ -63,8 +100,15 @@ func update_state() -> void:
 	else:
 		%HandLabel.text = ""
 
+# Helper function to cycle bet in first stage
+func cycle_bet() -> void:
+	if game_state == GameState.BET or game_state == GameState.EVALUATE:
+		bet = (bet % MAX_BET) + 1
+
+# Helper function to hold a card by index
 func hold_card(card_index: int) -> void:
-	# TODO reject if not in initial deal game state
+	if game_state != GameState.INITIAL_DEAL: return
+
 	if card_index in held:
 		held.erase(card_index)
 	else:
