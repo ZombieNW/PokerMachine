@@ -457,6 +457,7 @@ stream = ExtResource("9_u4rra")
 autoplay = true
 
 [node name="TitleContainer" type="PanelContainer" parent="." unique_id=1340101410]
+unique_name_in_owner = true
 z_index = 20
 anchors_preset = 8
 anchor_left = 0.5

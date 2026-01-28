@@ -11,44 +11,41 @@ var held: Array[int] = []
 var bet: int = 1
 var credits: int = 5
 
+@onready var card_sprites: Array[Sprite2D] = [%Card1, %Card2, %Card3, %Card4, %Card5]
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	new_cards()
 
 func _input(event: InputEvent) -> void:
+	# Hold Card
+	for i in range(cards.size()):
+		if event.is_action_pressed("hold_%d" % (i + 1)):
+			if held.has(i): held.erase(i)
+			else: held.append(i)
+			update_state()
+	
 	if event.is_action_pressed("ui_accept"):
 		new_cards()
-	elif event.is_action_pressed("hold_1"):
-		if held.has(0): held.erase(0)
-		else: held.append(0)
-	elif event.is_action_pressed("hold_2"):
-		if held.has(1): held.erase(1)
-		else: held.append(1)
-	elif event.is_action_pressed("hold_3"):
-		if held.has(2): held.erase(2)
-		else: held.append(2)
-	elif event.is_action_pressed("hold_4"):
-		if held.has(3): held.erase(3)
-		else: held.append(3)
-	elif event.is_action_pressed("hold_5"):
-		if held.has(4): held.erase(4)
-		else: held.append(4)
 	elif event.is_action_pressed("bet"):
 		bet = (bet % 5) + 1
-	update_state()
+		update_state()
 
-# Return cards in hand and get new cards (with option to hold back cards)
+# Return cards in hand and get new cards
 func new_cards():
 	for i in range(cards.size()):
 		# Skip held cards
 		if i in held: continue
 		
 		# Return old card to deck
-		if cards[i]: DeckInstance.return_card(cards[i])
+		if cards[i] != "back": DeckInstance.return_card(cards[i])
 		
-		# Get new card
-		cards[i] = DeckInstance.get_card()
-	update_state()
+		# Get new card (and throw error if none are left in deck)
+		var new_card = DeckInstance.get_card()
+		if !new_card:
+			push_error("Deck is Empty :(")
+			return
+		cards[i] = new_card
 
 func update_state() -> void:
 	refresh_hold_labels()
@@ -65,16 +62,11 @@ func get_card_texture(card_name: String) -> Texture:
 
 # Update card textures to reflect game cards
 func refresh_card_textures() -> void:
-	%Card1.texture = get_card_texture(cards[0])
-	%Card2.texture = get_card_texture(cards[1])
-	%Card3.texture = get_card_texture(cards[2])
-	%Card4.texture = get_card_texture(cards[3])
-	%Card5.texture = get_card_texture(cards[4])
+	for i in cards.size():
+		card_sprites[i].texture = get_card_texture(cards[i])
 
+# Add hold label above card if in held array
 func refresh_hold_labels() -> void:
-	(%Card1.find_child("HoldLabel") as Label).visible = 0 in held
-	(%Card2.find_child("HoldLabel") as Label).visible = 1 in held
-	(%Card3.find_child("HoldLabel") as Label).visible = 2 in held
-	(%Card4.find_child("HoldLabel") as Label).visible = 3 in held
-	(%Card5.find_child("HoldLabel") as Label).visible = 4 in held
-		 
+	for i in cards.size():
+		var hold_label = card_sprites[i].find_child("HoldLabel") as Label
+		hold_label.visible = i in held		 
