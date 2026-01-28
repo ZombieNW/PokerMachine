@@ -4,10 +4,8 @@ const DeckScript = preload("uid://bdo7l5yfgwr6q")
 const PriceTableScript = preload("uid://depyceufqrs32")
 
 var DeckInstance = DeckScript.new()
-
 var cards: Array[String] = ["", "", "", "", ""]
 var held: Array[int] = []
-
 var bet: int = 1
 var credits: int = 5
 
@@ -55,6 +53,14 @@ func update_state() -> void:
 	%CreditLabel.text = str(credits) + " Credits"
 	%BetLabel.text = "Bet " + str(bet)
 	%TitleBetLabel.text = "Bet " + str(bet)
+
+func hold_card(card_index: int) -> void:
+	# TODO reject if not in initial deal game state
+	if card_index in held:
+		held.erase(card_index)
+	else:
+		held.append(card_index)
+	held.sort()
 
 # Get card texture file from card name string
 func get_card_texture(card_name: String) -> Texture:
