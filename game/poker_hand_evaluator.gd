@@ -2,6 +2,7 @@ class_name PokerHandEvaluator
 
 enum HandRank {
 	HIGH_CARD,
+	BAD_PAIR,
 	PAIR,
 	TWO_PAIR,
 	THREE_OF_A_KIND,
@@ -23,6 +24,7 @@ const PAYOUT_TABLE = {
 	HandRank.THREE_OF_A_KIND: [3, 6, 9, 12, 15],
 	HandRank.TWO_PAIR:        [2, 4, 6, 8, 10],
 	HandRank.PAIR:            [1, 2, 3, 4, 5], # "Jacks or Better"
+	HandRank.BAD_PAIR:        [0, 0, 0, 0, 0], # Normal Pair
 	HandRank.HIGH_CARD:       [0, 0, 0, 0, 0]
 }
 
@@ -104,9 +106,26 @@ static func _determine_hand_rank(rank_counts: Dictionary, is_flush: bool, is_str
 	
 	# Pair
 	if counts[0] == 2:
-		return HandRank.PAIR
+		if _get_value_from_count_and_values(counts[0], rank_values) < 11:
+			return HandRank.BAD_PAIR # Normal Pair
+		return HandRank.PAIR # "Jacks or Better"
 	
 	return HandRank.HIGH_CARD
+
+static func _get_value_from_count_and_values(target_count, values) -> int:
+	var counts = {}
+	
+	for value in values:
+		if counts.has(value):
+			counts[value] += 1
+		else:
+			counts[value] = 1
+	
+	for value in counts:
+		if counts[value] == target_count:
+			return value
+	
+	return -1
 
 static func _get_hand_name(rank: HandRank) -> String:
 	match rank:
@@ -118,7 +137,8 @@ static func _get_hand_name(rank: HandRank) -> String:
 		HandRank.STRAIGHT: return "Straight"
 		HandRank.THREE_OF_A_KIND: return "Three of a Kind"
 		HandRank.TWO_PAIR: return "Two Pair"
-		HandRank.PAIR: return "Pair"
+		HandRank.PAIR: return "Jacks or Better"
+		HandRank.BAD_PAIR: return "Pair"
 		HandRank.HIGH_CARD: return "High Card"
 		_: return "Unknown"
 
