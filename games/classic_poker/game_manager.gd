@@ -46,6 +46,8 @@ func _input(event: InputEvent) -> void:
 		cycle_bet()
 	elif event.is_action_pressed("add_credit"):
 		add_credit()
+	elif event.is_action_pressed("select_game"):
+		exit_game()
 
 # Start or reset a game
 func start_game() -> void:
@@ -68,6 +70,10 @@ func end_game() -> void:
 	game_state = GameState.BET
 	DeckInstance.reset_deck()
 	reset_cards_and_ui()
+
+func exit_game() -> void:
+	if game_state == GameState.BET or game_state == GameState.EVALUATE or game_state == GameState.CREDITS:
+		get_tree().change_scene_to_file("res://main_menu/main_menu.tscn")
 
 # Reset cards and UI
 func reset_cards_and_ui() -> void:

@@ -1,10 +1,12 @@
 [gd_scene format=4 uid="uid://biosn6v40igrp"]
 
 [ext_resource type="Texture2D" uid="uid://cb73bs065u8vv" path="res://common/assets/tabletop/default.png" id="1_bqqt6"]
+[ext_resource type="Script" uid="uid://dbs65ucdl3jgh" path="res://main_menu/main_menu.gd" id="1_t6bnd"]
 [ext_resource type="FontFile" uid="uid://u4y1ab2wxs1d" path="res://common/assets/fonts/m5x7.ttf" id="3_8ln24"]
 [ext_resource type="FontFile" uid="uid://bwnbbjh76bptd" path="res://common/assets/fonts/m3x6.ttf" id="3_wu84c"]
 [ext_resource type="PackedScene" uid="uid://m5vpo6d3hxa4" path="res://common/objects/menu_game_icon/poker_game_icon.tscn" id="4_wu84c"]
 [ext_resource type="PackedScene" uid="uid://cytrxtsp7cjik" path="res://games/classic_poker/classic_poker.tscn" id="5_8ln24"]
+[ext_resource type="Texture2D" uid="uid://72c6ar76oaxr" path="res://games/classic_poker/classic_poker_icon.png" id="6_6tl50"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7vjpr"]
 texture = ExtResource("1_bqqt6")
@@ -14,6 +16,7 @@ texture = ExtResource("1_bqqt6")
 sources/0 = SubResource("TileSetAtlasSource_7vjpr")
 
 [node name="MainMenu" type="Node2D" unique_id=2029773568]
+script = ExtResource("1_t6bnd")
 
 [node name="Tabletop" type="TileMapLayer" parent="." unique_id=76086437]
 scale = Vector2(4, 4)
@@ -58,9 +61,16 @@ offset_right = 232.0
 offset_bottom = 172.0
 
 [node name="GridContainer" type="GridContainer" parent="Tabletop/CenterContainer" unique_id=1900080771]
+unique_name_in_owner = true
 layout_mode = 2
 columns = 4
 
 [node name="PokerGame1" parent="Tabletop/CenterContainer/GridContainer" unique_id=1676433480 instance=ExtResource("4_wu84c")]
 layout_mode = 2
 game_scene = ExtResource("5_8ln24")
+game_icon = ExtResource("6_6tl50")
+
+[node name="PokerGame2" parent="Tabletop/CenterContainer/GridContainer" unique_id=59327395 instance=ExtResource("4_wu84c")]
+layout_mode = 2
+game_scene = ExtResource("5_8ln24")
+game_icon = ExtResource("6_6tl50")
