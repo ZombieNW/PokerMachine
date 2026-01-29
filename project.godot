@@ -10,10 +10,13 @@ config_version=5
 
 [application]
 
-config/name="PokerMachine"
+config/name="Poker Machine Software"
+config/description="Poker Machine Software by Zach Runnels"
+config/version="0.1"
 run/main_scene="uid://cytrxtsp7cjik"
 config/features=PackedStringArray("4.6", "GL Compatibility")
-config/icon="res://icon.svg"
+boot_splash/bg_color=Color(0, 0, 0, 1)
+config/icon="uid://bibp7nutpfku6"
 
 [display]
 
