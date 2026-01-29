@@ -8,7 +8,6 @@ enum GameState { BET, INITIAL_DEAL, DRAW, EVALUATE, CREDITS}
 const DEFAULT_CARD_COUNT: int = 5
 const MAX_BET: int = 5
 const STARTING_CREDITS: int = 0
-const CARD_TEXTURE_PATH: String = "res://assets/kenney_playing-cards-pack/card_%s.png"
 
 var DeckInstance = DeckScript.new()
 var cards: Array[String] = []
@@ -17,9 +16,10 @@ var bet: int = 1
 var credits: int = STARTING_CREDITS
 var game_state: GameState = GameState.CREDITS
 
-@onready var card_sprites: Array[Sprite2D] = [%Card1, %Card2, %Card3, %Card4, %Card5]
+@onready var card_objects: Array[CardObject] = [%Card1, %Card2, %Card3, %Card4, %Card5]
 
 func _ready() -> void:
+	initialize_click_signals()
 	update_state()
 	end_game()
 
@@ -28,14 +28,12 @@ func _input(event: InputEvent) -> void:
 	for i in range(cards.size()):
 		if event.is_action_pressed("hold_%d" % (i + 1)):
 			hold_card(i)
-			update_state()
 			return
 	
 	if event.is_action_pressed("ui_accept"):
 		handle_deal_draw()
 	elif event.is_action_pressed("bet"):
 		cycle_bet()
-		update_state()
 	elif event.is_action_pressed("add_credit"):
 		add_credit()
 
@@ -131,6 +129,7 @@ func out_of_credits() -> void:
 func cycle_bet() -> void:
 	if game_state == GameState.BET:
 		bet = (bet % MAX_BET) + 1
+	update_state()
 
 # Helper function to hold a card by index
 func hold_card(card_index: int) -> void:
@@ -141,18 +140,24 @@ func hold_card(card_index: int) -> void:
 	else:
 		held.append(card_index)
 	held.sort()
+	update_state()
 
-# Get card texture file from card name string
-func get_card_texture(card_name: String) -> Texture:
-	return load(CARD_TEXTURE_PATH % card_name)
+# Tie area2d signals to their actions
+func initialize_click_signals() -> void:
+	for i in card_objects.size():
+		card_objects[i].input_event.connect(hold_card_via_input_event.bind(i))
+
+# 
+func hold_card_via_input_event(_viewport: Viewport, event: InputEvent, _shape_idx: int, card_index: int) -> void:
+	if event is InputEventMouseButton and event.pressed:
+		hold_card(card_index)
 
 # Update card textures to reflect game cards
 func refresh_card_textures() -> void:
 	for i in cards.size():
-		card_sprites[i].texture = get_card_texture(cards[i])
+		card_objects[i].set_card(cards[i])
 
 # Add hold label above card if in held array
 func refresh_hold_labels() -> void:
 	for i in cards.size():
-		var hold_label = card_sprites[i].find_child("HoldLabel") as Label
-		hold_label.visible = i in held		 
+		card_objects[i].set_held(i in held)

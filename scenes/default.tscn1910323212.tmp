@@ -59,19 +59,15 @@ unique_name_in_owner = true
 
 [node name="Card2" parent="CardContainer" unique_id=1037330722 instance=ExtResource("4_qh87u")]
 unique_name_in_owner = true
-position = Vector2(48, 0)
 
 [node name="Card3" parent="CardContainer" unique_id=1673910580 instance=ExtResource("4_qh87u")]
 unique_name_in_owner = true
-position = Vector2(96, 0)
 
 [node name="Card4" parent="CardContainer" unique_id=1520680134 instance=ExtResource("4_qh87u")]
 unique_name_in_owner = true
-position = Vector2(144, 0)
 
 [node name="Card5" parent="CardContainer" unique_id=939876735 instance=ExtResource("4_qh87u")]
 unique_name_in_owner = true
-position = Vector2(192, 0)
 
 [node name="HandLabel" type="Label" parent="." unique_id=1854888165]
 unique_name_in_owner = true
