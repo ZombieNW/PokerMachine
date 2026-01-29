@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://dycyem5cnrnyd"]
+
+[ext_resource type="Script" uid="uid://cxy4j6euah5lr" path="res://common/objects/card/card.gd" id="1_xykby"]
+[ext_resource type="Texture2D" uid="uid://dhdwr17v841pc" path="res://common/assets/kenney_cards/card_back.png" id="2_5m0fe"]
+[ext_resource type="FontFile" uid="uid://u4y1ab2wxs1d" path="res://common/assets/fonts/m5x7.ttf" id="3_yy4lo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hvtui"]
+size = Vector2(42, 60)
+
+[node name="Card" type="Area2D" unique_id=2056669212]
+script = ExtResource("1_xykby")
+
+[node name="CardSprite" type="Sprite2D" parent="." unique_id=57123485]
+texture = ExtResource("2_5m0fe")
+
+[node name="HoldLabel" type="Label" parent="CardSprite" unique_id=1406046238]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -52.0
+offset_top = -48.0
+offset_right = -12.0
+offset_bottom = -25.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("3_yy4lo")
+text = "HOLD"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=724062972]
+shape = SubResource("RectangleShape2D_hvtui")
