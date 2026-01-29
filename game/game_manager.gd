@@ -9,6 +9,11 @@ const DEFAULT_CARD_COUNT: int = 5
 const MAX_BET: int = 5
 const STARTING_CREDITS: int = 0
 
+const CARD_BACK: String = "back"
+const INSUFFICIENT_CREDITS_MSG: String = "Insufficient Credits"
+const PLACE_BETS_MSG: String = "Place Your Bets"
+const OUT_OF_CREDITS_MSG: String = "Out of Credits"
+
 var DeckInstance = DeckScript.new()
 var cards: Array[String] = []
 var held: Array[int] = []
@@ -19,7 +24,12 @@ var game_state: GameState = GameState.CREDITS
 @onready var card_objects: Array[CardObject] = [%Card1, %Card2, %Card3, %Card4, %Card5]
 
 func _ready() -> void:
-	initialize_click_signals()
+	# Hook card click to hold card
+	for i in card_objects.size():
+		card_objects[i].input_event.connect(func(_vp, event, _si):
+			if event is InputEventMouseButton and event.pressed:
+				hold_card(i)
+		)
 	update_state()
 	end_game()
 
@@ -40,13 +50,13 @@ func _input(event: InputEvent) -> void:
 # Start or reset a game
 func start_game() -> void:
 	if credits < bet:
-		%HandLabel.text = "Insufficient Credits"
+		%HandLabel.text = INSUFFICIENT_CREDITS_MSG
 		return
 	
 	%HandLabel.text = ""
 	credits -= bet
-	new_cards()
 	game_state = GameState.INITIAL_DEAL
+	new_cards()
 	update_state()
 
 # After evaluation
@@ -55,13 +65,16 @@ func end_game() -> void:
 		out_of_credits()
 		return
 	
-	%TitleContainer.hide()
 	game_state = GameState.BET
-	cards.resize(DEFAULT_CARD_COUNT)
-	cards.fill("back")
-	held.clear()
 	DeckInstance.reset_deck()
-	%HandLabel.text = "Place Your Bets"
+	reset_cards_and_ui()
+
+# Reset cards and UI
+func reset_cards_and_ui() -> void:
+	cards.assign([CARD_BACK, CARD_BACK, CARD_BACK, CARD_BACK, CARD_BACK])
+	held.clear()
+	%TitleContainer.hide()
+	%HandLabel.text = PLACE_BETS_MSG
 	update_state()
 
 # When deal/draw button pressed, essentially a "next"
@@ -76,8 +89,8 @@ func handle_deal_draw() -> void:
 
 # The middle turn of the game
 func draw_cards() -> void:
-	new_cards()
 	game_state = GameState.EVALUATE
+	new_cards()
 	evaluate()
 	update_state()
 
@@ -102,14 +115,13 @@ func new_cards():
 		if i in held: continue
 		
 		# Return old card to deck
-		if cards[i] != "back": DeckInstance.return_card(cards[i])
+		if cards[i] != CARD_BACK: DeckInstance.return_card(cards[i])
 		
 		# Get new card (and throw error if none are left in deck)
-		var new_card = DeckInstance.get_card()
-		if !new_card:
+		cards[i] = DeckInstance.get_card()
+		if !cards[i]:
 			push_error("Deck is Empty :(")
 			return
-		cards[i] = new_card
 
 # Update UI/Labels
 func update_state() -> void:
@@ -123,7 +135,7 @@ func update_state() -> void:
 func out_of_credits() -> void:
 	game_state = GameState.CREDITS
 	%TitleContainer.show()
-	%TitleLabel.text = "Out of Credits"
+	%TitleLabel.text = OUT_OF_CREDITS_MSG
 
 # Helper function to cycle bet in first stage
 func cycle_bet() -> void:
@@ -141,16 +153,6 @@ func hold_card(card_index: int) -> void:
 		held.append(card_index)
 	held.sort()
 	update_state()
-
-# Tie area2d signals to their actions
-func initialize_click_signals() -> void:
-	for i in card_objects.size():
-		card_objects[i].input_event.connect(hold_card_via_input_event.bind(i))
-
-# 
-func hold_card_via_input_event(_viewport: Viewport, event: InputEvent, _shape_idx: int, card_index: int) -> void:
-	if event is InputEventMouseButton and event.pressed:
-		hold_card(card_index)
 
 # Update card textures to reflect game cards
 func refresh_card_textures() -> void:
