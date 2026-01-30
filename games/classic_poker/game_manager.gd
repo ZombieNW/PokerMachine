@@ -7,7 +7,6 @@ enum GameState { BET, INITIAL_DEAL, DRAW, EVALUATE, CREDITS}
 
 const DEFAULT_CARD_COUNT: int = 5
 const MAX_BET: int = 5
-const STARTING_CREDITS: int = 0
 
 const CARD_BACK: String = "back"
 const INSUFFICIENT_CREDITS_MSG: String = "Insufficient Credits"
@@ -18,7 +17,6 @@ var DeckInstance = DeckScript.new()
 var cards: Array[String] = []
 var held: Array[int] = []
 var bet: int = 1
-var credits: int = STARTING_CREDITS
 var game_state: GameState = GameState.CREDITS
 
 @onready var card_objects: Array[CardObject] = [%Card1, %Card2, %Card3, %Card4, %Card5]
@@ -45,25 +43,25 @@ func _input(event: InputEvent) -> void:
 	elif event.is_action_pressed("bet"):
 		cycle_bet()
 	elif event.is_action_pressed("add_credit"):
-		add_credit()
+		check_credit()
 	elif event.is_action_pressed("select_game"):
 		exit_game()
 
 # Start or reset a game
 func start_game() -> void:
-	if credits < bet:
+	if Credit.get_credits() < bet:
 		%HandLabel.text = INSUFFICIENT_CREDITS_MSG
 		return
 	
 	%HandLabel.text = ""
-	credits -= bet
+	Credit.subtract(bet)
 	game_state = GameState.INITIAL_DEAL
 	new_cards()
 	update_state()
 
 # After evaluation
 func end_game() -> void:
-	if credits <= 0:
+	if Credit.get_credits() <= 0:
 		out_of_credits()
 		return
 	
@@ -100,9 +98,9 @@ func draw_cards() -> void:
 	evaluate()
 	update_state()
 
-# add credit and escape no credit screen
-func add_credit():
-	credits += 1
+# escape no credit screen
+func check_credit():
+	await get_tree().process_frame
 	if game_state == GameState.CREDITS:
 		end_game()
 	update_state()
@@ -112,7 +110,7 @@ func evaluate() -> void:
 	var hand_result = PokerHandEvaluator.evaluate_hand(cards)
 	var payout = PokerHandEvaluator.get_payout(hand_result.rank, bet)
 	%HandLabel.text = hand_result.name
-	credits += payout
+	Credit.add(payout)
 
 # Return cards in hand and get new cards
 func new_cards():
@@ -134,7 +132,7 @@ func update_state() -> void:
 	refresh_hold_labels()
 	refresh_card_textures()
 	%PriceTable.set_price_panel(bet - 1)
-	%CreditLabel.text = "%d Credits" % credits
+	%CreditLabel.text = "%d Credits" % Credit.get_credits()
 	%BetLabel.text = "Bet %d" % bet
 
 # Display game over screen when out of credits
