@@ -16,8 +16,12 @@ func _input(event: InputEvent) -> void:
 		update_state()
 	elif event.is_action_pressed("deal_draw"):
 		game_icons[selected_icon].run_game()
+	elif event.is_action_pressed("add_credit"):
+		await get_tree().process_frame
+		update_state()
 
 func update_state() -> void:
+	%CreditsLabel.text = "%d Credits - © Zach Runnels 2026" % Credit.get_credits()
 	for game_icon in game_icons:
 			if game_icon == game_icons[selected_icon]:
 				game_icon.select()

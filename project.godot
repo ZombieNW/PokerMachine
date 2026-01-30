@@ -18,6 +18,10 @@ config/features=PackedStringArray("4.6", "GL Compatibility")
 boot_splash/bg_color=Color(0, 0, 0, 1)
 config/icon="uid://bibp7nutpfku6"
 
+[autoload]
+
+Credit="*uid://cv7jnjn47vs22"
+
 [display]
 
 window/size/viewport_width=1024
