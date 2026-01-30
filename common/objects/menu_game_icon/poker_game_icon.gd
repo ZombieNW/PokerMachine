@@ -18,7 +18,7 @@ func _ready() -> void:
 	$TextureRect.texture = game_icon
 
 func _on_gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.pressed:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		run_game()
 
 func run_game() -> void:

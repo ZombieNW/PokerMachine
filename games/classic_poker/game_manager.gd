@@ -25,7 +25,7 @@ func _ready() -> void:
 	# Hook card click to hold card
 	for i in card_objects.size():
 		card_objects[i].input_event.connect(func(_vp, event, _si):
-			if event is InputEventMouseButton and event.pressed:
+			if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 				hold_card(i)
 		)
 	update_state()
