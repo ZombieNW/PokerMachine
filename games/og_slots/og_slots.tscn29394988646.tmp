@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://bc8i3id1mlhim"]
+
+[ext_resource type="PackedScene" uid="uid://h5j5hvaekowy" path="res://games/og_slots/slot.tscn" id="1_k8mm7"]
+[ext_resource type="Script" uid="uid://dakd3fou7lrw5" path="res://games/og_slots/game_manager.gd" id="1_xmcqp"]
+[ext_resource type="Texture2D" uid="uid://b3kdn3h430sbn" path="res://games/og_slots/cover.png" id="2_y3xvm"]
+
+[node name="OgSlots" type="Node2D" unique_id=1872391885]
+scale = Vector2(4, 4)
+script = ExtResource("1_xmcqp")
+
+[node name="SlotContainer" type="HBoxContainer" parent="." unique_id=1846225462]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(88, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 84.0
+offset_top = -20.0
+offset_right = 172.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Slot1" parent="SlotContainer" unique_id=2100515896 instance=ExtResource("1_k8mm7")]
+
+[node name="Slot2" parent="SlotContainer" unique_id=1356313066 instance=ExtResource("1_k8mm7")]
+position = Vector2(32, 0)
+
+[node name="Slot3" parent="SlotContainer" unique_id=177366783 instance=ExtResource("1_k8mm7")]
+position = Vector2(64, 0)
+
+[node name="Panel" type="TextureRect" parent="." unique_id=1946471275]
+offset_left = 72.0
+offset_top = 56.0
+offset_right = 184.0
+offset_bottom = 120.0
+texture = ExtResource("2_y3xvm")

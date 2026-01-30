@@ -1,0 +1,32 @@
+[gd_scene format=4 uid="uid://h5j5hvaekowy"]
+
+[ext_resource type="Texture2D" uid="uid://y7365yqg4um0" path="res://games/og_slots/fruits.png" id="1_hd5md"]
+[ext_resource type="Script" uid="uid://xtpuiasx1j6q" path="res://games/og_slots/slot.gd" id="1_pfqa1"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pfqa1"]
+texture = ExtResource("1_hd5md")
+texture_region_size = Vector2i(24, 24)
+0:0/0 = 0
+1:0/0 = 0
+1:1/0 = 0
+0:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+1:3/0 = 0
+0:3/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_xmcqp"]
+tile_size = Vector2i(24, 24)
+sources/1 = SubResource("TileSetAtlasSource_pfqa1")
+
+[node name="Slot1" type="Node2D" unique_id=2100515896]
+script = ExtResource("1_pfqa1")
+
+[node name="Fruits1" type="TileMapLayer" parent="." unique_id=245347462]
+tile_map_data = PackedByteArray("AAAAAAAAAQAAAAAAAAAAAAEAAQABAAAAAAAAAAIAAQAAAAEAAAAAAAMAAQABAAEAAAAAAAQAAQAAAAIAAAAAAAUAAQABAAIAAAAAAAYAAQAAAAMAAAAAAAcAAQABAAMAAAA=")
+tile_set = SubResource("TileSet_xmcqp")
+
+[node name="Fruits2" type="TileMapLayer" parent="." unique_id=587510059]
+position = Vector2(0, 192)
+tile_map_data = PackedByteArray("AAAAAAAAAQAAAAAAAAAAAAEAAQABAAAAAAAAAAIAAQAAAAEAAAAAAAMAAQABAAEAAAAAAAQAAQAAAAIAAAAAAAUAAQABAAIAAAAAAAYAAQAAAAMAAAAAAAcAAQABAAMAAAA=")
+tile_set = SubResource("TileSet_xmcqp")
