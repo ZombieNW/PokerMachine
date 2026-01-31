@@ -54,14 +54,6 @@ offset_right = 256.0
 offset_bottom = 192.0
 texture = ExtResource("2_shgei")
 
-[node name="Cover_Front" type="TextureRect" parent="WallpaperBackground" unique_id=1946471275]
-layout_mode = 0
-offset_left = 72.0
-offset_top = 56.0
-offset_right = 184.0
-offset_bottom = 120.0
-texture = ExtResource("2_y3xvm")
-
 [node name="Cover_Back" type="TextureRect" parent="WallpaperBackground" unique_id=1162714408]
 layout_mode = 0
 offset_left = 72.0
@@ -69,6 +61,14 @@ offset_top = 56.0
 offset_right = 184.0
 offset_bottom = 120.0
 texture = ExtResource("6_kggex")
+
+[node name="Cover_Front" type="TextureRect" parent="WallpaperBackground" unique_id=1946471275]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 56.0
+offset_right = 184.0
+offset_bottom = 120.0
+texture = ExtResource("2_y3xvm")
 
 [node name="PillarLeft" type="TextureRect" parent="WallpaperBackground" unique_id=447254169]
 layout_mode = 0
