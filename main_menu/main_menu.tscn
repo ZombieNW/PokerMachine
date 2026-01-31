@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://m5vpo6d3hxa4" path="res://common/objects/menu_game_icon/poker_game_icon.tscn" id="4_wu84c"]
 [ext_resource type="PackedScene" uid="uid://cytrxtsp7cjik" path="res://games/classic_poker/classic_poker.tscn" id="5_8ln24"]
 [ext_resource type="Texture2D" uid="uid://72c6ar76oaxr" path="res://games/classic_poker/classic_poker_icon.png" id="6_6tl50"]
+[ext_resource type="PackedScene" uid="uid://bc8i3id1mlhim" path="res://games/og_slots/og_slots.tscn" id="8_6at21"]
+[ext_resource type="Texture2D" uid="uid://bdxxpwkx6bx8w" path="res://games/og_slots/og_slots_icon.png" id="9_og6xe"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7vjpr"]
 texture = ExtResource("1_bqqt6")
@@ -71,7 +73,7 @@ layout_mode = 2
 game_scene = ExtResource("5_8ln24")
 game_icon = ExtResource("6_6tl50")
 
-[node name="PokerGame2" parent="Tabletop/CenterContainer/GridContainer" unique_id=59327395 instance=ExtResource("4_wu84c")]
+[node name="SlotsGame" parent="Tabletop/CenterContainer/GridContainer" unique_id=59327395 instance=ExtResource("4_wu84c")]
 layout_mode = 2
-game_scene = ExtResource("5_8ln24")
-game_icon = ExtResource("6_6tl50")
+game_scene = ExtResource("8_6at21")
+game_icon = ExtResource("9_og6xe")
