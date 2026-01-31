@@ -2,11 +2,29 @@
 
 [ext_resource type="PackedScene" uid="uid://h5j5hvaekowy" path="res://games/og_slots/slot.tscn" id="1_k8mm7"]
 [ext_resource type="Script" uid="uid://dakd3fou7lrw5" path="res://games/og_slots/game_manager.gd" id="1_xmcqp"]
+[ext_resource type="Texture2D" uid="uid://b700wdd2vjs6s" path="res://games/og_slots/background.png" id="2_shgei"]
 [ext_resource type="Texture2D" uid="uid://b3kdn3h430sbn" path="res://games/og_slots/cover.png" id="2_y3xvm"]
+[ext_resource type="StyleBox" uid="uid://bwnmuv151oyio" path="res://common/assets/panels/solid_white_panel.tres" id="3_i5v18"]
+[ext_resource type="Texture2D" uid="uid://qj7eorffatrv" path="res://games/og_slots/cover_under.png" id="6_kggex"]
+[ext_resource type="Texture2D" uid="uid://ccywp0k1um17a" path="res://games/og_slots/pillar.png" id="6_o6vdv"]
+[ext_resource type="StyleBox" uid="uid://po1gdid4rvl" path="res://common/assets/panels/black_panel.tres" id="8_e21rc"]
+[ext_resource type="FontFile" uid="uid://bwnbbjh76bptd" path="res://common/assets/fonts/m3x6.ttf" id="9_facdi"]
 
 [node name="OgSlots" type="Node2D" unique_id=1872391885]
 scale = Vector2(4, 4)
 script = ExtResource("1_xmcqp")
+
+[node name="WhiteBackground" type="Panel" parent="." unique_id=616971642]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 256.0
+offset_bottom = 192.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("3_i5v18")
 
 [node name="SlotContainer" type="HBoxContainer" parent="." unique_id=1846225462]
 unique_name_in_owner = true
@@ -31,9 +49,111 @@ position = Vector2(32, 0)
 [node name="Slot3" parent="SlotContainer" unique_id=177366783 instance=ExtResource("1_k8mm7")]
 position = Vector2(64, 0)
 
-[node name="Panel" type="TextureRect" parent="." unique_id=1946471275]
+[node name="WallpaperBackground" type="TextureRect" parent="." unique_id=1180119267]
+offset_right = 256.0
+offset_bottom = 192.0
+texture = ExtResource("2_shgei")
+
+[node name="Cover_Front" type="TextureRect" parent="WallpaperBackground" unique_id=1946471275]
+layout_mode = 0
 offset_left = 72.0
 offset_top = 56.0
 offset_right = 184.0
 offset_bottom = 120.0
 texture = ExtResource("2_y3xvm")
+
+[node name="Cover_Back" type="TextureRect" parent="WallpaperBackground" unique_id=1162714408]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 56.0
+offset_right = 184.0
+offset_bottom = 120.0
+texture = ExtResource("6_kggex")
+
+[node name="PillarLeft" type="TextureRect" parent="WallpaperBackground" unique_id=447254169]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 192.0
+texture = ExtResource("6_o6vdv")
+
+[node name="PillarRight" type="TextureRect" parent="WallpaperBackground" unique_id=1351824664]
+layout_mode = 0
+offset_left = 224.0
+offset_right = 256.0
+offset_bottom = 192.0
+texture = ExtResource("6_o6vdv")
+
+[node name="TitleLabel" type="Label" parent="." unique_id=1979463040]
+custom_minimum_size = Vector2(256, 0)
+offset_top = 4.0
+offset_right = 256.0
+offset_bottom = 17.0
+text = "OG Slots"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StatusLabel" type="Label" parent="." unique_id=1212878012]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(256, 0)
+offset_top = 42.0
+offset_right = 256.0
+offset_bottom = 55.000008
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=312323121]
+offset_left = 32.0
+offset_top = 126.0
+offset_right = 224.0
+offset_bottom = 184.0
+theme_override_styles/panel = ExtResource("8_e21rc")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer" unique_id=1718080636]
+layout_mode = 2
+alignment = 1
+
+[node name="Names" type="Label" parent="PanelContainer/HBoxContainer" unique_id=1295864212]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_constants/line_spacing = -4
+theme_override_fonts/font = ExtResource("9_facdi")
+text = "Each Cherry
+Each Bar
+Fruit Salad
+3-of-a-Kind
+Sevens Jackpot"
+vertical_alignment = 1
+
+[node name="Prices" type="Label" parent="PanelContainer/HBoxContainer" unique_id=198859210]
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_constants/line_spacing = -4
+theme_override_fonts/font = ExtResource("9_facdi")
+text = "1
+2
+5
+50
+250"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1205833044]
+offset_left = 12.0
+offset_top = 16.0
+offset_right = 244.0
+offset_bottom = 29.0
+alignment = 1
+
+[node name="CreditsLabel" type="Label" parent="HBoxContainer" unique_id=1400226302]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(88, 0)
+layout_mode = 2
+text = "0 Credits"
+
+[node name="BetLabel" type="Label" parent="HBoxContainer" unique_id=955221742]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(88, 0)
+layout_mode = 2
+text = "Bet 0"
+horizontal_alignment = 2

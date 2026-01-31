@@ -17,6 +17,9 @@ enum State { IDLE, SPINNING, DECELERATING, SNAPPING }
 var state: State = State.IDLE
 var current_speed: float = 0.0
 var snap_tween: Tween = null
+var last_tile_position: int = 0
+
+@export var click_sound: AudioStream = preload("uid://ll0gsulda8bq")
 
 @onready var map_1: TileMapLayer = $Fruits1
 @onready var map_2: TileMapLayer = $Fruits2
@@ -48,13 +51,19 @@ func update_spinning(delta: float) -> void:
 		if current_speed < MIN_SPEED_THRESHOLD:
 			snap_to_position()
 			return
-		
+	
 	move_maps(current_speed * delta)
 
 # Move maps on the y-axis
 func move_maps(amount) -> void:
 	map_1.position.y = fmod(map_1.position.y + amount, MAP_HEIGHT)
 	map_2.position.y = map_1.position.y - MAP_HEIGHT
+	
+	var current_tile_position = int(floor(map_1.position.y / TILE_SIZE))
+	
+	if current_tile_position != last_tile_position:
+		Sound.play_sound(click_sound, 0.25)
+		last_tile_position = current_tile_position
 
 # Tween to closest symbol
 func snap_to_position() -> void:
@@ -66,6 +75,8 @@ func snap_to_position() -> void:
 	# Clean up any existing tween
 	if snap_tween and snap_tween.is_valid():
 		snap_tween.kill()
+	
+	Sound.play_sound(click_sound, 1)
 	
 	# TWEEN THE BITCH
 	snap_tween = create_tween()
