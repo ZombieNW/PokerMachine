@@ -38,7 +38,7 @@ func _input(event: InputEvent) -> void:
 			hold_card(i)
 			return
 	
-	if event.is_action_pressed("ui_accept"):
+	if event.is_action_pressed("deal_draw"):
 		handle_deal_draw()
 	elif event.is_action_pressed("bet"):
 		cycle_bet()

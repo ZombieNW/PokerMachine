@@ -96,7 +96,7 @@ func update_state() -> void:
 	pass
 
 func payout() -> void:
-	var payout_amount := SlotSymbol.calculate_payout(results, 1)
+	var payout_amount := SlotSymbol.calculate_payout(results, bet)
 	if payout_amount > 0:
 		Credit.add(payout_amount)
 		Sound.play_sound(cash_sound)
