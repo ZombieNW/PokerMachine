@@ -101,40 +101,38 @@ offset_bottom = 55.000008
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="." unique_id=312323121]
+[node name="PriceTable" type="PanelContainer" parent="." unique_id=312323121]
 offset_left = 32.0
 offset_top = 126.0
 offset_right = 224.0
 offset_bottom = 184.0
 theme_override_styles/panel = ExtResource("8_e21rc")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer" unique_id=1718080636]
+[node name="HBoxContainer" type="HBoxContainer" parent="PriceTable" unique_id=1718080636]
 layout_mode = 2
 alignment = 1
 
-[node name="Names" type="Label" parent="PanelContainer/HBoxContainer" unique_id=1295864212]
+[node name="Names" type="Label" parent="PriceTable/HBoxContainer" unique_id=1295864212]
 layout_mode = 2
 size_flags_vertical = 1
 theme_override_constants/line_spacing = -4
 theme_override_fonts/font = ExtResource("9_facdi")
 text = "Each Cherry
-Each Bar
 Fruit Salad
 3-of-a-Kind
 Sevens Jackpot"
 vertical_alignment = 1
 
-[node name="Prices" type="Label" parent="PanelContainer/HBoxContainer" unique_id=198859210]
+[node name="Prices" type="Label" parent="PriceTable/HBoxContainer" unique_id=198859210]
 custom_minimum_size = Vector2(48, 0)
 layout_mode = 2
 size_flags_vertical = 1
 theme_override_constants/line_spacing = -4
 theme_override_fonts/font = ExtResource("9_facdi")
 text = "1
-2
 5
-50
-250"
+20
+100"
 horizontal_alignment = 2
 vertical_alignment = 1
 

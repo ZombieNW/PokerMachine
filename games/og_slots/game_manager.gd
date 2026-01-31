@@ -12,6 +12,7 @@ enum GameState { BET, SPINNING, CREDITS }
 var game_state: GameState = GameState.BET
 
 @export var cash_sound: AudioStream = preload("uid://bve6cuqxwk7e1")
+@export var incorrect_sound: AudioStream = preload("uid://bjte2uqm4lnsb")
 @export var jackpot_sound: AudioStream = preload("uid://dft7qa2ln3g0q")
 
 func _ready() -> void:
@@ -101,6 +102,8 @@ func payout() -> void:
 		Sound.play_sound(cash_sound)
 	if payout_amount > 100:
 		Sound.play_sound(jackpot_sound)
+	if payout_amount == 0:
+		Sound.play_sound(incorrect_sound)
 	
 	update_state()
 

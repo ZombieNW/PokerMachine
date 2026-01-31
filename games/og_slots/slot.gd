@@ -62,7 +62,7 @@ func move_maps(amount) -> void:
 	var current_tile_position = int(floor(map_1.position.y / TILE_SIZE))
 	
 	if current_tile_position != last_tile_position:
-		Sound.play_sound(click_sound, 0.25)
+		Sound.play_sound(click_sound, 0.1)
 		last_tile_position = current_tile_position
 
 # Tween to closest symbol

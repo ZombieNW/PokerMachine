@@ -19,17 +19,16 @@ static func calculate_payout(results: Array, bet_amount: int) -> int:
 	var payout = 0
 	# Jackpot
 	if results[0] == results[1] and results[1] == results[2] and results[0]== Type.SEVEN:
-		payout = 250
+		payout = 100
 	# 3-of-a-Kind
 	elif results[0] == results[1] and results[1] == results[2]:
-		payout = 50
+		payout = 20
 	# Fruit Salad
 	elif results.all(func(s): return s in fruits):
 		payout = 5
 	
-	# Cherries 'n' Bars
+	# Cherries
 	payout += results.count(Type.CHERRY) * 1
-	payout += results.count(Type.BAR) * 2
 	
 	return payout * bet_amount
 
