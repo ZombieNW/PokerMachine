@@ -2,6 +2,20 @@ extends Node
 
 class_name SlotSymbol
 
+const PRICE_TABLE = {
+	Combos.CHERRY: [1, "Each Cherry"],
+	Combos.FRUIT_SALAD: [2, "Fruit Salad"],
+	Combos.THREE_OF_A_KIND: [10, "3-of-a-Kind"],
+	Combos.JACKPOT: [20, "Sevens Jackpot"],
+}
+
+enum Combos {
+	CHERRY,
+	FRUIT_SALAD,
+	THREE_OF_A_KIND,
+	JACKPOT
+}
+
 enum Type {
 	COCONUT,
 	SEVEN,
@@ -19,13 +33,13 @@ static func calculate_payout(results: Array, bet_amount: int) -> int:
 	var payout = 0
 	# Jackpot
 	if results[0] == results[1] and results[1] == results[2] and results[0]== Type.SEVEN:
-		payout = 100
+		payout = PRICE_TABLE[Combos.JACKPOT][0]
 	# 3-of-a-Kind
 	elif results[0] == results[1] and results[1] == results[2]:
-		payout = 20
+		payout = PRICE_TABLE[Combos.THREE_OF_A_KIND][0]
 	# Fruit Salad
 	elif results.all(func(s): return s in fruits):
-		payout = 5
+		payout = PRICE_TABLE[Combos.FRUIT_SALAD][0]
 	
 	# Cherries
 	payout += results.count(Type.CHERRY) * 1

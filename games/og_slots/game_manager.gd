@@ -93,7 +93,15 @@ func spin_slots() -> void:
 func update_state() -> void:
 	%CreditsLabel.text = "%d Credits" % Credit.get_credits()
 	%BetLabel.text = "Bet %d" % bet
-	pass
+	
+	# Price Table Formatting
+	var prices_list = []
+	var names_list = []
+	for entry in SlotSymbol.PRICE_TABLE.values():
+		prices_list.append(str(entry[0] * bet))
+		names_list.append(entry[1])
+	%PriceNames.text = "\n".join(names_list)
+	%PricePrices.text = "\n".join(prices_list)
 
 func payout() -> void:
 	var payout_amount := SlotSymbol.calculate_payout(results, bet)
