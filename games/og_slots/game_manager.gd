@@ -14,6 +14,8 @@ var game_state: GameState = GameState.BET
 @export var cash_sound: AudioStream = preload("uid://bve6cuqxwk7e1")
 @export var incorrect_sound: AudioStream = preload("uid://bjte2uqm4lnsb")
 @export var jackpot_sound: AudioStream = preload("uid://dft7qa2ln3g0q")
+@export var blip_sound: AudioStream = preload("uid://ll0gsulda8bq")
+@export var lever_sound: AudioStream = preload("uid://dymbevwky0s0f")
 
 func _ready() -> void:
 	initialize_slots()
@@ -69,7 +71,7 @@ func spin_slots() -> void:
 	
 	game_state = GameState.SPINNING
 	results.fill(-1)
-	
+	Sound.play_sound(lever_sound)
 	
 	for i in slots.size():
 		var delay := i * SLOT_DELAY_MIN + randf_range(SLOT_DELAY_RANGE.x, SLOT_DELAY_RANGE.y)
@@ -103,12 +105,18 @@ func payout() -> void:
 	var payout_object := SlotSymbol.calculate_payout(results, bet)
 	var payout_amount: int = payout_object[0]
 	if payout_amount > 0:
-		Credit.add(payout_amount)
 		Sound.play_sound(cash_sound)
 	if payout_amount > 100:
 		Sound.play_sound(jackpot_sound)
 	if payout_amount == 0:
 		Sound.play_sound(incorrect_sound)
+	
+	for i in range(payout_amount):
+		Credit.add(1)
+		Sound.play_sound(blip_sound)
+		update_state()
+		flash_lines(payout_object)
+		await get_tree().create_timer(0.1).timeout
 	
 	update_state()
 	flash_lines(payout_object)
