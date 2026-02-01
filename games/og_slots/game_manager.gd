@@ -83,10 +83,6 @@ func spin_slots() -> void:
 	
 	# Print Results
 	payout()
-	var symbol_names: PackedStringArray = []
-	for result in results:
-		symbol_names.append(SlotSymbol.get_symbol_name(result))
-	print(symbol_names)
 	
 	game_state = GameState.BET
 
@@ -104,7 +100,8 @@ func update_state() -> void:
 	%PricePrices.text = "\n".join(prices_list)
 
 func payout() -> void:
-	var payout_amount := SlotSymbol.calculate_payout(results, bet)
+	var payout_object := SlotSymbol.calculate_payout(results, bet)
+	var payout_amount: int = payout_object[0]
 	if payout_amount > 0:
 		Credit.add(payout_amount)
 		Sound.play_sound(cash_sound)
@@ -114,6 +111,28 @@ func payout() -> void:
 		Sound.play_sound(incorrect_sound)
 	
 	update_state()
+	flash_lines(payout_object)
+
+func flash_lines(payout_object: Array) -> void:
+	if payout_object[0] == 0:
+		return
+	
+	var payout_str:String = str(payout_object[0])
+	var payout_name: String = payout_object[1]
+	
+	var priceNamesLines: Array = %PriceNames.text.split("\n")
+	var pricePricesLines: Array = %PricePrices.text.split("\n")
+	
+	for i in range(priceNamesLines.size()):
+		if priceNamesLines[i] == payout_name:
+			priceNamesLines[i] = "[color=gold]" + payout_name + "[/color]"
+	
+	for i in range(pricePricesLines.size()):
+		if pricePricesLines[i] == payout_str:
+			pricePricesLines[i] = "[color=gold]" + payout_str + "[/color]"
+	
+	%PriceNames.text = "\n".join(priceNamesLines)
+	%PricePrices.text = "\n".join(pricePricesLines)
 
 func _on_slot_result_ready(result: int, slot_index: int) -> void:
 	if slot_index < 0 or slot_index >= results.size():

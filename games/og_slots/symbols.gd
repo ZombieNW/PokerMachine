@@ -3,7 +3,7 @@ extends Node
 class_name SlotSymbol
 
 const PRICE_TABLE = {
-	Combos.CHERRY: [1, "Each Cherry"],
+	Combos.CHERRY: [1, "Cherries"],
 	Combos.FRUIT_SALAD: [2, "Fruit Salad"],
 	Combos.THREE_OF_A_KIND: [10, "3-of-a-Kind"],
 	Combos.JACKPOT: [20, "Sevens Jackpot"],
@@ -29,22 +29,25 @@ enum Type {
 
 const fruits = [Type.COCONUT, Type.CHERRY, Type.ORANGE, Type.PEAR, Type.MELON]
 
-static func calculate_payout(results: Array, bet_amount: int) -> int:
-	var payout = 0
+static func calculate_payout(results: Array, bet_amount: int) -> Array:
+	var payout: Array = [0, ""]
 	# Jackpot
 	if results[0] == results[1] and results[1] == results[2] and results[0]== Type.SEVEN:
-		payout = PRICE_TABLE[Combos.JACKPOT][0]
+		payout = PRICE_TABLE[Combos.JACKPOT].duplicate()
 	# 3-of-a-Kind
 	elif results[0] == results[1] and results[1] == results[2]:
-		payout = PRICE_TABLE[Combos.THREE_OF_A_KIND][0]
+		payout = PRICE_TABLE[Combos.THREE_OF_A_KIND].duplicate()
 	# Fruit Salad
 	elif results.all(func(s): return s in fruits):
-		payout = PRICE_TABLE[Combos.FRUIT_SALAD][0]
-	
+		payout = PRICE_TABLE[Combos.FRUIT_SALAD].duplicate()
 	# Cherries
-	payout += results.count(Type.CHERRY) * 1
+	elif results.has(Type.CHERRY):
+		payout = PRICE_TABLE[Combos.CHERRY].duplicate()
 	
-	return payout * bet_amount
+	if not payout.is_empty():
+		payout[0] *= bet_amount
+		
+	return payout
 
 static func get_symbol_name(symbol_type: int) -> String:
 	match symbol_type:

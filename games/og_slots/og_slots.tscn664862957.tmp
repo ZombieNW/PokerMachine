@@ -14,6 +14,9 @@
 [node name="OgSlots" type="Node2D" unique_id=1872391885]
 scale = Vector2(4, 4)
 script = ExtResource("1_xmcqp")
+cash_sound = null
+incorrect_sound = null
+jackpot_sound = null
 
 [node name="WhiteBackground" type="Panel" parent="." unique_id=616971642]
 anchors_preset = 15
