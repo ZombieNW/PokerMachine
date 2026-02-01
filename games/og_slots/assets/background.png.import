@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b3kdn3h430sbn"
-path="res://.godot/imported/cover.png-27889cf29a177c7fde1d35a48d5ea373.ctex"
+uid="uid://b700wdd2vjs6s"
+path="res://.godot/imported/background.png-e7460570f0d4deccddec0ce8d4b65089.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/og_slots/cover.png"
-dest_files=["res://.godot/imported/cover.png-27889cf29a177c7fde1d35a48d5ea373.ctex"]
+source_file="res://games/og_slots/assets/background.png"
+dest_files=["res://.godot/imported/background.png-e7460570f0d4deccddec0ce8d4b65089.ctex"]
 
 [params]
 

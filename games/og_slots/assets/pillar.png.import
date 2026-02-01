@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://qj7eorffatrv"
-path="res://.godot/imported/cover_under.png-6df08c8344de13c49aab4bb0a9481b72.ctex"
+uid="uid://ccywp0k1um17a"
+path="res://.godot/imported/pillar.png-faa848aa8c0df604155e472d92a1a67c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/og_slots/cover_under.png"
-dest_files=["res://.godot/imported/cover_under.png-6df08c8344de13c49aab4bb0a9481b72.ctex"]
+source_file="res://games/og_slots/assets/pillar.png"
+dest_files=["res://.godot/imported/pillar.png-faa848aa8c0df604155e472d92a1a67c.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://y7365yqg4um0"
-path="res://.godot/imported/fruits.png-01a896db28cce884bd5321419d025cd1.ctex"
+uid="uid://qj7eorffatrv"
+path="res://.godot/imported/cover_under.png-7bf7bdf4e233b56cb3c2c3ed55a4f25f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/og_slots/fruits.png"
-dest_files=["res://.godot/imported/fruits.png-01a896db28cce884bd5321419d025cd1.ctex"]
+source_file="res://games/og_slots/assets/cover_under.png"
+dest_files=["res://.godot/imported/cover_under.png-7bf7bdf4e233b56cb3c2c3ed55a4f25f.ctex"]
 
 [params]
 
