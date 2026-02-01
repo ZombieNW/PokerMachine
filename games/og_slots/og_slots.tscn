@@ -2,14 +2,14 @@
 
 [ext_resource type="PackedScene" uid="uid://h5j5hvaekowy" path="res://games/og_slots/slot.tscn" id="1_k8mm7"]
 [ext_resource type="Script" uid="uid://dakd3fou7lrw5" path="res://games/og_slots/game_manager.gd" id="1_xmcqp"]
-[ext_resource type="Texture2D" uid="uid://b700wdd2vjs6s" path="res://games/og_slots/background.png" id="2_shgei"]
-[ext_resource type="Texture2D" uid="uid://b3kdn3h430sbn" path="res://games/og_slots/cover.png" id="2_y3xvm"]
+[ext_resource type="Texture2D" uid="uid://b700wdd2vjs6s" path="res://games/og_slots/assets/background.png" id="2_shgei"]
+[ext_resource type="Texture2D" uid="uid://b3kdn3h430sbn" path="res://games/og_slots/assets/cover.png" id="2_y3xvm"]
 [ext_resource type="StyleBox" uid="uid://bwnmuv151oyio" path="res://common/assets/panels/solid_white_panel.tres" id="3_i5v18"]
-[ext_resource type="Texture2D" uid="uid://qj7eorffatrv" path="res://games/og_slots/cover_under.png" id="6_kggex"]
-[ext_resource type="Texture2D" uid="uid://ccywp0k1um17a" path="res://games/og_slots/pillar.png" id="6_o6vdv"]
+[ext_resource type="Texture2D" uid="uid://qj7eorffatrv" path="res://games/og_slots/assets/cover_under.png" id="6_kggex"]
+[ext_resource type="Texture2D" uid="uid://ccywp0k1um17a" path="res://games/og_slots/assets/pillar.png" id="6_o6vdv"]
 [ext_resource type="StyleBox" uid="uid://po1gdid4rvl" path="res://common/assets/panels/black_panel.tres" id="8_e21rc"]
 [ext_resource type="FontFile" uid="uid://bwnbbjh76bptd" path="res://common/assets/fonts/m3x6.ttf" id="9_facdi"]
-[ext_resource type="AudioStream" uid="uid://ds6vb4k3x0te1" path="res://games/og_slots/music.ogg" id="10_hns4h"]
+[ext_resource type="AudioStream" uid="uid://ds6vb4k3x0te1" path="res://games/og_slots/assets/music.ogg" id="10_hns4h"]
 
 [node name="OgSlots" type="Node2D" unique_id=1872391885]
 scale = Vector2(4, 4)
