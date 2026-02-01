@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://ccywp0k1um17a" path="res://games/og_slots/pillar.png" id="6_o6vdv"]
 [ext_resource type="StyleBox" uid="uid://po1gdid4rvl" path="res://common/assets/panels/black_panel.tres" id="8_e21rc"]
 [ext_resource type="FontFile" uid="uid://bwnbbjh76bptd" path="res://common/assets/fonts/m3x6.ttf" id="9_facdi"]
+[ext_resource type="AudioStream" uid="uid://ds6vb4k3x0te1" path="res://games/og_slots/music.ogg" id="10_hns4h"]
 
 [node name="OgSlots" type="Node2D" unique_id=1872391885]
 scale = Vector2(4, 4)
@@ -157,3 +158,7 @@ custom_minimum_size = Vector2(88, 0)
 layout_mode = 2
 text = "Bet 0"
 horizontal_alignment = 2
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=585933867]
+stream = ExtResource("10_hns4h")
+autoplay = true
