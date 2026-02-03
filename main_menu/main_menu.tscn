@@ -9,6 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://72c6ar76oaxr" path="res://games/classic_poker/classic_poker_icon.png" id="6_6tl50"]
 [ext_resource type="PackedScene" uid="uid://bc8i3id1mlhim" path="res://games/og_slots/og_slots.tscn" id="8_6at21"]
 [ext_resource type="Texture2D" uid="uid://bdxxpwkx6bx8w" path="res://games/og_slots/og_slots_icon.png" id="9_og6xe"]
+[ext_resource type="PackedScene" uid="uid://d3orqt7es0sv3" path="res://games/high_low/high_low.tscn" id="10_mvfl2"]
+[ext_resource type="Texture2D" uid="uid://bscqeov34vitx" path="res://games/high_low/high_low_icon.png" id="11_qvn4f"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7vjpr"]
 texture = ExtResource("1_bqqt6")
@@ -77,3 +79,8 @@ game_icon = ExtResource("6_6tl50")
 layout_mode = 2
 game_scene = ExtResource("8_6at21")
 game_icon = ExtResource("9_og6xe")
+
+[node name="HighLowGame" parent="Tabletop/CenterContainer/GridContainer" unique_id=1906682504 instance=ExtResource("4_wu84c")]
+layout_mode = 2
+game_scene = ExtResource("10_mvfl2")
+game_icon = ExtResource("11_qvn4f")
