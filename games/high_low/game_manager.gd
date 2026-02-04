@@ -44,11 +44,22 @@ func _input(event: InputEvent) -> void:
 		get_tree().change_scene_to_file("res://main_menu/main_menu.tscn")
 
 func advance_game_state() -> void:
+	if Credit.get_credits() < bet:
+		return
+
 	previous_card = current_card
 	current_card = DeckInstance.get_card()
 	
 	var prev_card_value: int = _card_to_value(previous_card)
 	var current_card_value: int = _card_to_value(current_card)
+	
+	if current_card_value == 14 or current_card_value == 2:
+		# Auto-loss
+		await get_tree().process_frame
+		update_state()
+		return
+	
+	Credit.subtract(bet)
 	
 	if guess == GUESSES.HIGHER and prev_card_value < current_card_value:
 		Credit.add(bet * 2)
@@ -56,6 +67,10 @@ func advance_game_state() -> void:
 		Credit.add(bet * 2)
 	else:
 		pass
+	
+	# Reset deck when low
+	if DeckInstance.deck.size() == 1:
+		DeckInstance.reset_deck()
 	
 	await get_tree().process_frame
 	update_state()
@@ -72,7 +87,7 @@ func update_state() -> void:
 	
 	%BetLabel.text = "Bet %d" % bet
 	%CreditLabel.text = "%d Credits" % Credit.get_credits()
-	%PayoutLabel.text = "Payout %d" % (bet * 2)
+	%PayoutLabel.text = "Payout %d" % bet
 	
 	if guess == GUESSES.HIGHER:
 		%HighLabel.show()
