@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://d1i1x3ehp0t0j"]
+
+[ext_resource type="Script" uid="uid://crqb21ail0gl3" path="res://games/yacht_dice/dice_object.gd" id="1_vadrk"]
+[ext_resource type="Texture2D" uid="uid://b7rgvjc6e1gi3" path="res://games/yacht_dice/assets/dice1.png" id="2_kdvib"]
+
+[node name="DiceObject" type="Control" unique_id=564069571]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 16.0
+offset_bottom = 16.0
+script = ExtResource("1_vadrk")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=93106186]
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 16.0
+texture = ExtResource("2_kdvib")
+
+[node name="HeldLabel" type="Label" parent="." unique_id=637728715]
+layout_mode = 0
+offset_top = -12.0
+offset_right = 16.0
+offset_bottom = 4.0
+text = "*"
+horizontal_alignment = 1
+vertical_alignment = 1

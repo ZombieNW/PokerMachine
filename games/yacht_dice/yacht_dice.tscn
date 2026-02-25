@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bhl5tefy58kli" path="res://games/yacht_dice/assets/bg.png" id="1_7xiyk"]
 [ext_resource type="Script" uid="uid://ce2k63nn13fb1" path="res://games/yacht_dice/game_manager.gd" id="1_fmbxi"]
-[ext_resource type="Texture2D" uid="uid://b7rgvjc6e1gi3" path="res://games/yacht_dice/assets/dice1.png" id="2_j5de0"]
+[ext_resource type="PackedScene" uid="uid://d1i1x3ehp0t0j" path="res://games/yacht_dice/Dice_Object.tscn" id="3_4be83"]
 [ext_resource type="FontFile" uid="uid://u4y1ab2wxs1d" path="res://common/assets/fonts/m5x7.ttf" id="7_61ksp"]
 [ext_resource type="Texture2D" uid="uid://cqptybxg56rmr" path="res://games/yacht_dice/assets/paper.png" id="8_hi3o6"]
 [ext_resource type="FontFile" uid="uid://bwnbbjh76bptd" path="res://common/assets/fonts/m3x6.ttf" id="9_uwcaw"]
@@ -83,77 +83,27 @@ offset_left = 80.0
 offset_top = 88.0
 offset_right = 176.0
 offset_bottom = 104.0
+theme_override_constants/separation = 20
 
-[node name="Dice1" type="TextureRect" parent="Background/DiceBox" unique_id=1165776968]
+[node name="Dice1" parent="Background/DiceBox" unique_id=772528946 instance=ExtResource("3_4be83")]
 unique_name_in_owner = true
 layout_mode = 2
-texture = ExtResource("2_j5de0")
 
-[node name="Dice2" type="TextureRect" parent="Background/DiceBox" unique_id=1909708714]
+[node name="Dice2" parent="Background/DiceBox" unique_id=564069571 instance=ExtResource("3_4be83")]
 unique_name_in_owner = true
 layout_mode = 2
-texture = ExtResource("2_j5de0")
 
-[node name="Dice3" type="TextureRect" parent="Background/DiceBox" unique_id=1801780083]
+[node name="Dice3" parent="Background/DiceBox" unique_id=668289558 instance=ExtResource("3_4be83")]
 unique_name_in_owner = true
 layout_mode = 2
-texture = ExtResource("2_j5de0")
 
-[node name="Dice4" type="TextureRect" parent="Background/DiceBox" unique_id=1764923558]
+[node name="Dice4" parent="Background/DiceBox" unique_id=601347929 instance=ExtResource("3_4be83")]
 unique_name_in_owner = true
 layout_mode = 2
-texture = ExtResource("2_j5de0")
 
-[node name="Dice5" type="TextureRect" parent="Background/DiceBox" unique_id=608969497]
+[node name="Dice5" parent="Background/DiceBox" unique_id=1307690163 instance=ExtResource("3_4be83")]
 unique_name_in_owner = true
 layout_mode = 2
-texture = ExtResource("2_j5de0")
-
-[node name="HoldBox" type="HBoxContainer" parent="Background" unique_id=1063147886]
-offset_left = 80.0
-offset_top = 76.0
-offset_right = 176.0
-offset_bottom = 92.0
-
-[node name="Hold1" type="Label" parent="Background/HoldBox" unique_id=333016605]
-unique_name_in_owner = true
-visible = false
-custom_minimum_size = Vector2(16, 0)
-layout_mode = 2
-text = "*"
-horizontal_alignment = 1
-
-[node name="Hold2" type="Label" parent="Background/HoldBox" unique_id=2137886153]
-unique_name_in_owner = true
-visible = false
-custom_minimum_size = Vector2(16, 0)
-layout_mode = 2
-text = "*"
-horizontal_alignment = 1
-
-[node name="Hold3" type="Label" parent="Background/HoldBox" unique_id=43020551]
-unique_name_in_owner = true
-visible = false
-custom_minimum_size = Vector2(16, 0)
-layout_mode = 2
-text = "*"
-horizontal_alignment = 1
-
-[node name="Hold4" type="Label" parent="Background/HoldBox" unique_id=1296415159]
-unique_name_in_owner = true
-visible = false
-custom_minimum_size = Vector2(16, 0)
-layout_mode = 2
-text = "*"
-horizontal_alignment = 1
-
-[node name="Hold5" type="Label" parent="Background/HoldBox" unique_id=1047180479]
-unique_name_in_owner = true
-visible = false
-custom_minimum_size = Vector2(16, 0)
-layout_mode = 2
-text = "*"
-horizontal_alignment = 1
 
 [node name="TitleLabel" type="Label" parent="Background" unique_id=1411740773]
 offset_left = 96.0
@@ -164,11 +114,21 @@ text = "Yacht Dice"
 horizontal_alignment = 1
 
 [node name="PayoutLabel" type="Label" parent="Background" unique_id=707588469]
+unique_name_in_owner = true
 offset_left = 64.0
 offset_top = 22.0
 offset_right = 192.0
 offset_bottom = 35.0
 text = "1 Credits / 100 Points"
+horizontal_alignment = 1
+
+[node name="StateLabel" type="Label" parent="Background" unique_id=106387261]
+unique_name_in_owner = true
+offset_left = 64.0
+offset_top = 106.0
+offset_right = 192.0
+offset_bottom = 119.0
+text = "Place your Bets"
 horizontal_alignment = 1
 
 [node name="CreditContainer" type="HBoxContainer" parent="Background" unique_id=2040502061]
