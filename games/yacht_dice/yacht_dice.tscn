@@ -3,10 +3,6 @@
 [ext_resource type="Texture2D" uid="uid://bhl5tefy58kli" path="res://games/yacht_dice/assets/bg.png" id="1_7xiyk"]
 [ext_resource type="Script" uid="uid://ce2k63nn13fb1" path="res://games/yacht_dice/game_manager.gd" id="1_fmbxi"]
 [ext_resource type="Texture2D" uid="uid://b7rgvjc6e1gi3" path="res://games/yacht_dice/assets/dice1.png" id="2_j5de0"]
-[ext_resource type="Texture2D" uid="uid://bpqjqkcalfo0a" path="res://games/yacht_dice/assets/dice2.png" id="3_v1emw"]
-[ext_resource type="Texture2D" uid="uid://fvqqgslls8np" path="res://games/yacht_dice/assets/dice3.png" id="4_4be83"]
-[ext_resource type="Texture2D" uid="uid://c4g3vgjoa2d5n" path="res://games/yacht_dice/assets/dice4.png" id="5_61ksp"]
-[ext_resource type="Texture2D" uid="uid://cpfi6oqi872ap" path="res://games/yacht_dice/assets/dice5.png" id="6_hi3o6"]
 [ext_resource type="FontFile" uid="uid://u4y1ab2wxs1d" path="res://common/assets/fonts/m5x7.ttf" id="7_61ksp"]
 [ext_resource type="Texture2D" uid="uid://cqptybxg56rmr" path="res://games/yacht_dice/assets/paper.png" id="8_hi3o6"]
 [ext_resource type="FontFile" uid="uid://bwnbbjh76bptd" path="res://common/assets/fonts/m3x6.ttf" id="9_uwcaw"]
@@ -94,19 +90,19 @@ texture = ExtResource("2_j5de0")
 
 [node name="Dice2" type="TextureRect" parent="Background/DiceBox" unique_id=1909708714]
 layout_mode = 2
-texture = ExtResource("3_v1emw")
+texture = ExtResource("2_j5de0")
 
 [node name="Dice3" type="TextureRect" parent="Background/DiceBox" unique_id=1801780083]
 layout_mode = 2
-texture = ExtResource("4_4be83")
+texture = ExtResource("2_j5de0")
 
 [node name="Dice4" type="TextureRect" parent="Background/DiceBox" unique_id=1764923558]
 layout_mode = 2
-texture = ExtResource("5_61ksp")
+texture = ExtResource("2_j5de0")
 
 [node name="Dice5" type="TextureRect" parent="Background/DiceBox" unique_id=608969497]
 layout_mode = 2
-texture = ExtResource("6_hi3o6")
+texture = ExtResource("2_j5de0")
 
 [node name="HoldBox" type="HBoxContainer" parent="Background" unique_id=1063147886]
 offset_left = 80.0
