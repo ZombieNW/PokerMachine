@@ -11,6 +11,9 @@ func _ready() -> void:
 	update_state()
 
 func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("hold_1") and event.is_action_pressed("hold_2"):
+		get_tree().change_scene_to_file("res://games/high_low/high_low.tscn")
+	
 	if event.is_action_pressed("select_game"):
 		selected_icon = ((selected_icon + 1) % game_icons.size()) 
 		update_state()

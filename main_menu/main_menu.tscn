@@ -81,6 +81,7 @@ game_scene = ExtResource("8_6at21")
 game_icon = ExtResource("9_og6xe")
 
 [node name="HighLowGame" parent="Tabletop/CenterContainer/GridContainer" unique_id=1906682504 instance=ExtResource("4_wu84c")]
+visible = false
 layout_mode = 2
 game_scene = ExtResource("10_mvfl2")
 game_icon = ExtResource("11_qvn4f")
