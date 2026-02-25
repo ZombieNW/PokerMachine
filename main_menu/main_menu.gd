@@ -1,7 +1,8 @@
 extends Node2D
 
 var game_icons: Array[GameIcon] = []
-var selected_icon = 0;
+var selected_icon = 0
+var easter_egg_input: int = 0
 
 
 # Program Start
@@ -11,7 +12,10 @@ func _ready() -> void:
 	update_state()
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("hold_1") and event.is_action_pressed("hold_2"):
+	if event.is_action_pressed("hold_1"):
+		easter_egg_input += 1
+	
+	if easter_egg_input == 5:
 		get_tree().change_scene_to_file("res://games/high_low/high_low.tscn")
 	
 	if event.is_action_pressed("select_game"):
