@@ -79,30 +79,35 @@ tile_map_data = PackedByteArray("AAAAAAAAAAABAAAAAAABAAAAAAACAAAAAAACAAAAAAACAAA
 tile_set = SubResource("TileSet_j5de0")
 
 [node name="DiceBox" type="HBoxContainer" parent="Background" unique_id=693875699]
-offset_left = 80.0
-offset_top = 88.0
-offset_right = 176.0
-offset_bottom = 104.0
-theme_override_constants/separation = 20
+offset_top = 72.0
+offset_right = 256.0
+offset_bottom = 88.0
+theme_override_constants/separation = 8
+alignment = 1
 
 [node name="Dice1" parent="Background/DiceBox" unique_id=772528946 instance=ExtResource("3_4be83")]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 
 [node name="Dice2" parent="Background/DiceBox" unique_id=564069571 instance=ExtResource("3_4be83")]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 
-[node name="Dice3" parent="Background/DiceBox" unique_id=668289558 instance=ExtResource("3_4be83")]
+[node name="Dice3" parent="Background/DiceBox" unique_id=2006257123 instance=ExtResource("3_4be83")]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 
-[node name="Dice4" parent="Background/DiceBox" unique_id=601347929 instance=ExtResource("3_4be83")]
+[node name="Dice4" parent="Background/DiceBox" unique_id=678475652 instance=ExtResource("3_4be83")]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 
-[node name="Dice5" parent="Background/DiceBox" unique_id=1307690163 instance=ExtResource("3_4be83")]
+[node name="Dice5" parent="Background/DiceBox" unique_id=1148289146 instance=ExtResource("3_4be83")]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 0)
 layout_mode = 2
 
 [node name="TitleLabel" type="Label" parent="Background" unique_id=1411740773]
