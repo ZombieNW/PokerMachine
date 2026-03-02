@@ -15,6 +15,7 @@ var dice_values: Array[int] = [1, 1, 1, 1, 1]
 var held: Array[int] = []
 
 func _ready() -> void:
+	%Paper.hide()
 	update_state()
 
 func _input(event: InputEvent) -> void:
@@ -54,8 +55,11 @@ func change_game_state() -> void:
 		GameState.INITIAL_DICE:
 			middle_turn()
 		GameState.FINAL_DICE:
-			pass
-			#evaluate()
+			paper_score()
+		GameState.SCORE:
+			place_paper_score()
+		GameState.FINAL_SCORE:
+			close_paper()
 
 # Accept bet and roll first dice
 func start_game() -> void:
@@ -73,11 +77,54 @@ func start_game() -> void:
 func middle_turn() -> void:
 	game_state = GameState.FINAL_DICE
 	roll_dice()
-	evaluate()
 	update_state()
 
-func evaluate() -> void:
-	%StateLabel.text = "Hand Go Here"
+func paper_score() -> void:
+	%Paper.show()
+	game_state = GameState.SCORE
+
+func place_paper_score() -> void:
+	# Use the integer value directly. 
+	# Dictionaries in GDScript handle the Enum-to-Int conversion automatically.
+	var current_selected_category = %Paper.selected
+	
+	if %Paper.user_score[current_selected_category] != -1:
+		%StateLabel.text = "Slot already filled!"
+		return
+	
+	%Paper.place_score(dice_values)
+	
+	if %Paper.is_full():
+		handle_game_over()
+	else:
+		# Transition to the state that allows 'close_paper' to be called
+		game_state = GameState.FINAL_SCORE
+		%StateLabel.text = "Score Placed! Press Action to Continue."
+
+func handle_game_over() -> void:
+	game_state = GameState.FINAL_SCORE
+	var final_score = %Paper.get_total_score()
+	%Paper.hide()
+	
+	# Payout logic: (Score / 100) * bet
+	# Example: 350 points with a 5 bet = 3 * 5 = 15 credits
+	var payout = (final_score / 100) * bet
+	Credit.add(payout) # Assuming your Credit singleton has an add method
+	
+	%StateLabel.text = "FINAL SCORE: %d | PAID: %d" % [final_score, payout]
+
+func close_paper() -> void:
+	if %Paper.is_full():
+		# The game is done. You could restart the scene or go to menu.
+		get_tree().reload_current_scene() 
+		return
+
+	# Reset for the NEXT TURN in the same game
+	%Paper.hide()
+	held.clear()
+	game_state = GameState.INITIAL_DICE
+	roll_dice() # Automatically start the first roll of the next turn
+	update_state()
 
 func exit_game() -> void:
 	if game_state == GameState.BET or game_state == GameState.FINAL_SCORE:
@@ -101,4 +148,5 @@ func roll_dice() -> void:
 	for dice_idx in dice_objects.size():
 		if dice_idx in held: continue
 		dice_objects[dice_idx].roll()
+		dice_values[dice_idx] = dice_objects[dice_idx].value
 	update_state()
