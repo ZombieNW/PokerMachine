@@ -117,7 +117,7 @@ func on_final_score_confirmed() -> void:
 	held.clear()
 	game_state = GameState.INITIAL_DICE
 	roll += 1
-	#%StateLabel.text = "Round %d" % roll
+	%StateLabel.text = "Round %d" % roll
 	roll_dice()
 	update_state()
 
