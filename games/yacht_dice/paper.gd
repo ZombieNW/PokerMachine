@@ -1,6 +1,10 @@
 extends TileMapLayer
 
 const CATEGORY_COUNT: int = 12
+
+const SCORE_ROW_OFFSET: int = 30
+const SCORE_ROW_HEIGHT: int = 10
+
 var selected:int = 0
 
 enum CATEGORIES {
@@ -50,44 +54,54 @@ var user_score: Dictionary[CATEGORIES, int] = {
 
 @onready var highlight_bar = $Highlight
 
+## Game Cycle
 func _ready() -> void:
 	update_state()
 
 func _input(event: InputEvent) -> void:
-	# Hold Buttons to Select
+	# Only process input when the paper is visible
 	if visible == false: return
 	for i in range(5):
 		if event.is_action_pressed("hold_%d" % (i + 1)):
 			select()
 			return
 
+## Selection
+# Find next available slot
 func select() -> void:
-	# find next available slot
+	# TODO SOUND TICK HERE
 	for i in range(CATEGORY_COUNT):
 		selected = (selected + 1) % CATEGORY_COUNT
 		if user_score[selected as CATEGORIES] == -1:
 			break
 	update_state()
 
+## Scoring
 func place_score(dice: Array[int]):
-	var category = selected as CATEGORIES
-	user_score[category] = calculate_score(category, dice)
+	var category := selected as CATEGORIES
+	var score := calculate_score(category, dice)
+	user_score[category] = score
+	
+	if score == 50 and category == CATEGORIES.YAHTZEE:
+		# TODO SOUND TADA HERE
+		pass
+	
 	update_state()
 
-func calculate_score(category: CATEGORIES, dice: Array[int]):
-	var counts = get_dice_counts(dice)
-	var dice_sum = 0
+func calculate_score(category: CATEGORIES, dice: Array[int]) -> int:
+	var counts := get_dice_counts(dice)
+	var dice_sum := 0
 	for d in dice:
 		dice_sum += d
 	
 	match category:
-		# sum based categories
+		# Upper (Sum based categories)
 		CATEGORIES.ONES, CATEGORIES.TWOS, CATEGORIES.THREES, \
 		CATEGORIES.FOURS, CATEGORIES.FIVES, CATEGORIES.SIXES:
 			var target_value = category + 1 # Enum 0 = Ones, so +1
 			return counts.get(target_value, 0) * target_value
 
-		# pattern based categories
+		# Lower (Pattern based categories)
 		CATEGORIES.THREE_OF_A_KIND:
 			return dice_sum if counts.values().max() >= 3 else 0
 			
@@ -111,8 +125,9 @@ func calculate_score(category: CATEGORIES, dice: Array[int]):
 			
 	return 0
 
+## UI Update
 func update_state() -> void:
-	highlight_bar.position.y = 30 + (selected * 10)
+	highlight_bar.position.y = SCORE_ROW_OFFSET + (selected * SCORE_ROW_HEIGHT)
 	
 	$ScoreLabel.text = "\n"
 	var total_sum: int = 0
@@ -124,36 +139,38 @@ func update_state() -> void:
 		var score_value = user_score[category]
 		
 		if score_value == -1:
-			# score not filled out yet
+			# Category not scored yet
 			$ScoreLabel.text += "[ ]\n"
 		else:
 			total_sum += score_value
 			$ScoreLabel.text += "%d\n" % score_value
 			
-			# add upper category for bonus
+			# Add together upper category scores for bonus
 			if i <= CATEGORIES.SIXES:
 				upper_sum += score_value
 	
-	# 63 is the magic bonus number
+	# Bonus if over 63 points
 	var bonus: int = 35 if upper_sum >= 63 else 0
 	total_sum += bonus
 	
-	# indicate bonus
+	# Put bonus on the sheet if we got it
 	if bonus > 0:
 		$ScoreLabel.text += "\nBonus: %d" % bonus
 	else:
 		$ScoreLabel.text += "\n"
-		
+	
+	# Total at the bottom
 	$ScoreLabel.text += "Total: %d" % total_sum
 
+## Scoring Systems
 func get_dice_counts(dice: Array[int]) -> Dictionary:
-	var counts = {}
+	var counts := {}
 	for die in dice:
 		counts[die] = counts.get(die, 0) + 1
 	return counts
 	
 func is_straight(dice: Array[int], required_length: int) -> bool:
-	# stringify is so we can compare it easier
+	# Make it a string so we can use text patterns instead of math
 	var unique_dice = []
 	for d in dice:
 		if not d in unique_dice:
@@ -164,21 +181,21 @@ func is_straight(dice: Array[int], required_length: int) -> bool:
 	for d in unique_dice:
 		sequence_string += str(d)
 	
-	# large straight patterns
+	# Large straight
 	if required_length == 5:
 		return sequence_string == "12345" or sequence_string == "23456"
-	# small straight patterns
+	# Small Straight
 	else:
 		return "1234" in sequence_string or "2345" in sequence_string or "3456" in sequence_string
 
-# if every slot filled
+# If every slot is filled (for figuring out if the game is over)
 func is_full() -> bool:
 	for category in user_score:
 		if user_score[category] == -1:
 			return false
 	return true
 
-# score including bonus
+# Gets the final/total score
 func get_total_score() -> int:
 	var total: int = 0
 	var upper_sum: int = 0

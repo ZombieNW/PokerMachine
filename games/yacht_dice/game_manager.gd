@@ -6,21 +6,25 @@ var game_state: GameState = GameState.BET
 var roll: int = 1
 
 # Betting
-const POINT_PAYOUT_RATIO: int = 100
 const MAX_BET: int = 5
 var bet: int = 1
 
-# Gameplay
+# Payout: (score * bet) / POINT_PAYOUT_RATIO
+const POINT_PAYOUT_RATIO: int = 100
+
+# Dice
 @onready var dice_objects: Array[DiceObject] = [%Dice1, %Dice2, %Dice3, %Dice4, %Dice5]
 var dice_values: Array[int] = [1, 1, 1, 1, 1]
 var held: Array[int] = []
 
+
+## Game Cycle
 func _ready() -> void:
 	%Paper.hide()
 	update_state()
 
 func _input(event: InputEvent) -> void:
-	# Hold Buttons
+	# Hold Buttons (1-5 toggle dice during hold state)
 	for i in range(dice_objects.size()):
 		if event.is_action_pressed("hold_%d" % (i + 1)):
 			hold_die(i)
@@ -37,6 +41,116 @@ func _input(event: InputEvent) -> void:
 	elif event.is_action_pressed("deal_draw"):
 		change_game_state()
 
+
+## State Machine
+# Advance game to next state
+func change_game_state() -> void:
+	match game_state:
+		GameState.BET:
+			on_bet_confirmed()
+		GameState.INITIAL_DICE:
+			on_initial_dice_confirmed()
+		GameState.FINAL_DICE:
+			on_final_dice_confirmed()
+		GameState.SCORE:
+			on_score_placed()
+		GameState.FINAL_SCORE:
+			on_final_score_confirmed()
+
+# Remove bet from credits and roll dice
+func on_bet_confirmed() -> void:
+	if Credit.get_credits() < bet:
+		%StateLabel.text = "Insufficient Credits"
+		# TODO SOUND ERROR HERE
+		return
+
+	%StateLabel.text = ""
+	Credit.subtract(bet)
+	game_state = GameState.INITIAL_DICE
+	
+	roll_dice()
+	update_state()
+
+# Re-Roll not held dice
+func on_initial_dice_confirmed() -> void:
+	game_state = GameState.FINAL_DICE
+	roll_dice()
+	update_state()
+
+func on_final_dice_confirmed() -> void:
+	%Paper.show()
+	game_state = GameState.SCORE
+	# TODO SOUND PAPER HERE
+
+func on_score_placed() -> void:
+	# Don't score an already scored slot
+	if %Paper.user_score[%Paper.selected] != -1:
+		return
+	
+	%Paper.place_score(dice_values)
+	# TODO SOUND PENCIL HERE
+	
+	if %Paper.is_full():
+		handle_game_over()
+	else:
+		game_state = GameState.FINAL_SCORE
+		%StateLabel.text = "New Dice"
+
+func on_final_score_confirmed() -> void:
+	if %Paper.is_full():
+		# Restart the whole game
+		get_tree().reload_current_scene() 
+		return
+
+	# Set up the next round
+	%Paper.hide()
+	held.clear()
+	game_state = GameState.INITIAL_DICE
+	roll += 1
+	%StateLabel.text = "Round %d" % roll
+	roll_dice()
+	update_state()
+
+
+## Game Over
+func handle_game_over() -> void:
+	game_state = GameState.FINAL_SCORE
+	var final_score = %Paper.get_total_score()
+	%Paper.hide()
+	
+	var payout := calculate_payout(final_score, bet)
+	Credit.add(payout)
+	
+	%StateLabel.text = "SCORE: %d | PAID: %d" % [final_score, payout]
+
+func calculate_payout(score: int, current_bet: int) -> int:
+	return floor((score * current_bet) / float(POINT_PAYOUT_RATIO))
+
+func exit_game() -> void:
+	if game_state == GameState.BET or game_state == GameState.FINAL_SCORE:
+		get_tree().change_scene_to_file("res://main_menu/main_menu.tscn")
+
+
+## UI Update
+func update_state() -> void:
+	%CreditLabel.text = "%d Credits" % Credit.get_credits()
+	%BetLabel.text = "Bet %d" % bet
+	%PayoutLabel.text = "%d Credits / %d Points" % [bet, POINT_PAYOUT_RATIO]
+	
+	for dice_idx in dice_objects.size():
+		dice_objects[dice_idx].set_held(dice_idx in held)
+
+
+## Dice & Betting
+# Rolls all dice
+func roll_dice() -> void:
+	# TODO SOUND DICE ROLL HERE
+	for dice_idx in dice_objects.size():
+		if dice_idx in held: continue
+		dice_objects[dice_idx].roll()
+		dice_values[dice_idx] = dice_objects[dice_idx].value
+	update_state()
+
 # Hold given dice
 func hold_die(index: int) -> void:
 	if game_state != GameState.INITIAL_DICE: return
@@ -48,102 +162,8 @@ func hold_die(index: int) -> void:
 	held.sort()
 	update_state()
 
-# Advance game
-func change_game_state() -> void:
-	match game_state:
-		GameState.BET:
-			start_game()
-		GameState.INITIAL_DICE:
-			middle_turn()
-		GameState.FINAL_DICE:
-			paper_score()
-		GameState.SCORE:
-			place_paper_score()
-		GameState.FINAL_SCORE:
-			close_paper()
-
-# Accept bet and roll first dice
-func start_game() -> void:
-	if Credit.get_credits() < bet:
-		%StateLabel.text = "Insufficient Credits"
-		return
-	
-	%StateLabel.text = ""
-	Credit.subtract(bet)
-	game_state = GameState.INITIAL_DICE
-	roll_dice()
-	update_state()
-
-# Middle Turn
-func middle_turn() -> void:
-	game_state = GameState.FINAL_DICE
-	roll_dice()
-	update_state()
-
-func paper_score() -> void:
-	%Paper.show()
-	game_state = GameState.SCORE
-
-func place_paper_score() -> void:
-	# Don't score an already scored slot
-	if %Paper.user_score[%Paper.selected] != -1:
-		return
-	
-	%Paper.place_score(dice_values)
-	
-	if %Paper.is_full():
-		handle_game_over()
-	else:
-		# next state
-		game_state = GameState.FINAL_SCORE
-		%StateLabel.text = "New Dice"
-
-func handle_game_over() -> void:
-	game_state = GameState.FINAL_SCORE
-	var final_score = %Paper.get_total_score()
-	%Paper.hide()
-	
-	# Payout formula: (Score / 100) * bet
-	var payout = (final_score / 100) * bet
-	Credit.add(payout)
-	
-	%StateLabel.text = "SCORE: %d | PAID: %d" % [final_score, payout]
-
-func close_paper() -> void:
-	if %Paper.is_full():
-		get_tree().reload_current_scene() 
-		return
-
-	# reset for next turn
-	%Paper.hide()
-	held.clear()
-	game_state = GameState.INITIAL_DICE
-	roll += 1
-	%StateLabel.text = "Round %d" % roll
-	roll_dice()
-	update_state()
-
-func exit_game() -> void:
-	if game_state == GameState.BET or game_state == GameState.FINAL_SCORE:
-		get_tree().change_scene_to_file("res://main_menu/main_menu.tscn")
-
+# Cycle bet between 1-5
 func cycle_bet() -> void:
 	if game_state == GameState.BET:
 		bet = (bet % MAX_BET) + 1
-	update_state()
-
-func update_state() -> void:
-	%CreditLabel.text = "%d Credits" % Credit.get_credits()
-	%BetLabel.text = "Bet %d" % bet
-	%PayoutLabel.text = "%d Credits / %d Points" % [bet, POINT_PAYOUT_RATIO]
-	
-	for dice_idx in dice_objects.size():
-		dice_objects[dice_idx].set_held(dice_idx in held)
-
-# Rolls all dice
-func roll_dice() -> void:
-	for dice_idx in dice_objects.size():
-		if dice_idx in held: continue
-		dice_objects[dice_idx].roll()
-		dice_values[dice_idx] = dice_objects[dice_idx].value
 	update_state()
