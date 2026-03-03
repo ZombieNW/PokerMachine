@@ -1,7 +1,7 @@
 extends Node2D
 
 # Game State
-enum GameState { BET, INITIAL_DICE, FINAL_DICE, SCORE, FINAL_SCORE}
+enum GameState { BET, INITIAL_DICE, SECOND_DICE, FINAL_DICE, SCORE, FINAL_SCORE}
 var game_state: GameState = GameState.BET
 var roll: int = 1
 
@@ -50,6 +50,8 @@ func change_game_state() -> void:
 			on_bet_confirmed()
 		GameState.INITIAL_DICE:
 			on_initial_dice_confirmed()
+		GameState.SECOND_DICE:
+			on_second_dice_confirmed()
 		GameState.FINAL_DICE:
 			on_final_dice_confirmed()
 		GameState.SCORE:
@@ -64,17 +66,25 @@ func on_bet_confirmed() -> void:
 		# TODO SOUND ERROR HERE
 		return
 
-	%StateLabel.text = ""
 	Credit.subtract(bet)
 	game_state = GameState.INITIAL_DICE
 	
 	roll_dice()
+	%StateLabel.text = "Roll 1/3"
 	update_state()
 
-# Re-Roll not held dice
+# Re-Roll not held dice (first reroll)
 func on_initial_dice_confirmed() -> void:
+	game_state = GameState.SECOND_DICE
+	roll_dice()
+	%StateLabel.text = "Roll 2/3"
+	update_state()
+
+# Re-Roll not held dice (second reroll)
+func on_second_dice_confirmed() -> void:
 	game_state = GameState.FINAL_DICE
 	roll_dice()
+	%StateLabel.text = "Roll 3/3"
 	update_state()
 
 func on_final_dice_confirmed() -> void:
@@ -107,7 +117,7 @@ func on_final_score_confirmed() -> void:
 	held.clear()
 	game_state = GameState.INITIAL_DICE
 	roll += 1
-	%StateLabel.text = "Round %d" % roll
+	#%StateLabel.text = "Round %d" % roll
 	roll_dice()
 	update_state()
 
@@ -153,7 +163,8 @@ func roll_dice() -> void:
 
 # Hold given dice
 func hold_die(index: int) -> void:
-	if game_state != GameState.INITIAL_DICE: return
+	# Allow holding during both reroll phases
+	if game_state != GameState.INITIAL_DICE and game_state != GameState.SECOND_DICE: return
 	
 	if index in held:
 		held.erase(index)
