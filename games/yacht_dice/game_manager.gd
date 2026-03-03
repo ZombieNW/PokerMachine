@@ -3,6 +3,7 @@ extends Node2D
 # Game State
 enum GameState { BET, INITIAL_DICE, FINAL_DICE, SCORE, FINAL_SCORE}
 var game_state: GameState = GameState.BET
+var roll: int = 1
 
 # Betting
 const POINT_PAYOUT_RATIO: int = 100
@@ -84,12 +85,8 @@ func paper_score() -> void:
 	game_state = GameState.SCORE
 
 func place_paper_score() -> void:
-	# Use the integer value directly. 
-	# Dictionaries in GDScript handle the Enum-to-Int conversion automatically.
-	var current_selected_category = %Paper.selected
-	
-	if %Paper.user_score[current_selected_category] != -1:
-		%StateLabel.text = "Slot already filled!"
+	# Don't score an already scored slot
+	if %Paper.user_score[%Paper.selected] != -1:
 		return
 	
 	%Paper.place_score(dice_values)
@@ -97,33 +94,33 @@ func place_paper_score() -> void:
 	if %Paper.is_full():
 		handle_game_over()
 	else:
-		# Transition to the state that allows 'close_paper' to be called
+		# next state
 		game_state = GameState.FINAL_SCORE
-		%StateLabel.text = "Score Placed! Press Action to Continue."
+		%StateLabel.text = "New Dice"
 
 func handle_game_over() -> void:
 	game_state = GameState.FINAL_SCORE
 	var final_score = %Paper.get_total_score()
 	%Paper.hide()
 	
-	# Payout logic: (Score / 100) * bet
-	# Example: 350 points with a 5 bet = 3 * 5 = 15 credits
+	# Payout formula: (Score / 100) * bet
 	var payout = (final_score / 100) * bet
-	Credit.add(payout) # Assuming your Credit singleton has an add method
+	Credit.add(payout)
 	
-	%StateLabel.text = "FINAL SCORE: %d | PAID: %d" % [final_score, payout]
+	%StateLabel.text = "SCORE: %d | PAID: %d" % [final_score, payout]
 
 func close_paper() -> void:
 	if %Paper.is_full():
-		# The game is done. You could restart the scene or go to menu.
 		get_tree().reload_current_scene() 
 		return
 
-	# Reset for the NEXT TURN in the same game
+	# reset for next turn
 	%Paper.hide()
 	held.clear()
 	game_state = GameState.INITIAL_DICE
-	roll_dice() # Automatically start the first roll of the next turn
+	roll += 1
+	%StateLabel.text = "Round %d" % roll
+	roll_dice()
 	update_state()
 
 func exit_game() -> void:

@@ -9,7 +9,7 @@ class_name DiceObject
 	2: preload("uid://bpqjqkcalfo0a"),
 	3: preload("uid://fvqqgslls8np"),
 	4: preload("uid://c4g3vgjoa2d5n"),
-	5: preload("uid://cpfi6oqi872ap"),
+	5: preload("uid://coeh0vwe3jp2e"),
 	6: preload("uid://cg2hbbto2adc2")
 }
 
