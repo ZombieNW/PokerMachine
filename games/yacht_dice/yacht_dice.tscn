@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://cw31v4y1oc2o8" path="res://games/yacht_dice/paper.gd" id="6_61ksp"]
 [ext_resource type="FontFile" uid="uid://u4y1ab2wxs1d" path="res://common/assets/fonts/m5x7.ttf" id="7_61ksp"]
 [ext_resource type="Texture2D" uid="uid://cqptybxg56rmr" path="res://games/yacht_dice/assets/paper.png" id="8_hi3o6"]
+[ext_resource type="AudioStream" uid="uid://6pft8ndu4otv" path="res://games/yacht_dice/assets/music.ogg" id="8_uwcaw"]
 [ext_resource type="FontFile" uid="uid://bwnbbjh76bptd" path="res://common/assets/fonts/m3x6.ttf" id="9_uwcaw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_j5de0"]
@@ -231,3 +232,7 @@ offset_top = 30.0
 offset_right = 189.99997
 offset_bottom = 37.999996
 color = Color(0.7764706, 0.2, 0.23137255, 0.5019608)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1469257209]
+stream = ExtResource("8_uwcaw")
+autoplay = true
