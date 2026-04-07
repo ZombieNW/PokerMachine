@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://bdxxpwkx6bx8w" path="res://games/og_slots/og_slots_icon.png" id="9_og6xe"]
 [ext_resource type="PackedScene" uid="uid://sl75at1dfch5" path="res://games/yacht_dice/yacht_dice.tscn" id="10_mvfl2"]
 [ext_resource type="Texture2D" uid="uid://bkxb85ktvwg64" path="res://games/yacht_dice/yacht_dice_icon.png" id="11_mvfl2"]
+[ext_resource type="AudioStream" uid="uid://b1g71hjuy1yb1" path="res://main_menu/music.ogg" id="12_qvn4f"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7vjpr"]
 texture = ExtResource("1_bqqt6")
@@ -84,3 +85,7 @@ game_icon = ExtResource("9_og6xe")
 layout_mode = 2
 game_scene = ExtResource("10_mvfl2")
 game_icon = ExtResource("11_mvfl2")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1599943523]
+stream = ExtResource("12_qvn4f")
+autoplay = true
