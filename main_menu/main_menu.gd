@@ -28,7 +28,7 @@ func _input(event: InputEvent) -> void:
 		update_state()
 
 func update_state() -> void:
-	%CreditsLabel.text = "%d Credits - © ZombieNW 2026" % Credit.get_credits()
+	%CreditsLabel.text = "%d Credits" % Credit.get_credits()
 	for game_icon in game_icons:
 			if game_icon == game_icons[selected_icon]:
 				game_icon.select()
