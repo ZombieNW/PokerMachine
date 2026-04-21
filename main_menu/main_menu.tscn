@@ -3,7 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://cb73bs065u8vv" path="res://common/assets/tabletop/default.png" id="1_bqqt6"]
 [ext_resource type="Script" uid="uid://dbs65ucdl3jgh" path="res://main_menu/main_menu.gd" id="1_t6bnd"]
 [ext_resource type="FontFile" uid="uid://u4y1ab2wxs1d" path="res://common/assets/fonts/m5x7.ttf" id="3_8ln24"]
+[ext_resource type="Texture2D" uid="uid://c4y243bsy6ofw" path="res://main_menu/assets/bg.png" id="3_g1omr"]
 [ext_resource type="FontFile" uid="uid://bwnbbjh76bptd" path="res://common/assets/fonts/m3x6.ttf" id="3_wu84c"]
+[ext_resource type="Texture2D" uid="uid://v7axdevdrk0v" path="res://main_menu/assets/bgcover.png" id="4_kwfav"]
 [ext_resource type="PackedScene" uid="uid://m5vpo6d3hxa4" path="res://common/objects/menu_game_icon/poker_game_icon.tscn" id="4_wu84c"]
 [ext_resource type="PackedScene" uid="uid://cytrxtsp7cjik" path="res://games/classic_poker/classic_poker.tscn" id="5_8ln24"]
 [ext_resource type="Texture2D" uid="uid://72c6ar76oaxr" path="res://games/classic_poker/classic_poker_icon.png" id="6_6tl50"]
@@ -17,18 +19,53 @@
 texture = ExtResource("1_bqqt6")
 0:0/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kwfav"]
+texture = ExtResource("4_kwfav")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+
 [sub_resource type="TileSet" id="TileSet_nvwnn"]
 sources/0 = SubResource("TileSetAtlasSource_7vjpr")
+sources/2 = SubResource("TileSetAtlasSource_kwfav")
 
 [node name="MainMenu" type="Node2D" unique_id=2029773568]
 script = ExtResource("1_t6bnd")
 
-[node name="Tabletop" type="TileMapLayer" parent="." unique_id=76086437]
+[node name="Background" type="TextureRect" parent="." unique_id=308737880]
+offset_right = 256.0
+offset_bottom = 192.0
 scale = Vector2(4, 4)
-tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAABAAEAAAAAAAAAAAAAAAEAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAHAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAJAAAAAAAAAAAAAAAKAAAAAAAAAAAAAAALAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAANAAAAAAAAAAAAAAAOAAAAAAAAAAAAAAAPAAAAAAAAAAAAAAAPAAEAAAAAAAAAAAAPAAIAAAAAAAAAAAAPAAMAAAAAAAAAAAAPAAQAAAAAAAAAAAAPAAUAAAAAAAAAAAAPAAYAAAAAAAAAAAAPAAcAAAAAAAAAAAAPAAgAAAAAAAAAAAAPAAkAAAAAAAAAAAAPAAoAAAAAAAAAAAAOAAoAAAAAAAAAAAAOAAsAAAAAAAAAAAAPAAsAAAAAAAAAAAANAAsAAAAAAAAAAAAMAAsAAAAAAAAAAAALAAsAAAAAAAAAAAAKAAsAAAAAAAAAAAAJAAsAAAAAAAAAAAAIAAsAAAAAAAAAAAAHAAsAAAAAAAAAAAAGAAsAAAAAAAAAAAAFAAsAAAAAAAAAAAAFAAoAAAAAAAAAAAAEAAoAAAAAAAAAAAADAAoAAAAAAAAAAAADAAsAAAAAAAAAAAACAAsAAAAAAAAAAAABAAsAAAAAAAAAAAAAAAsAAAAAAAAAAAAEAAsAAAAAAAAAAAACAAoAAAAAAAAAAAABAAoAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAIAAAAAAAAAAAABAAIAAAAAAAAAAAACAAIAAAAAAAAAAAACAAEAAAAAAAAAAAADAAEAAAAAAAAAAAAEAAEAAAAAAAAAAAAFAAEAAAAAAAAAAAAGAAEAAAAAAAAAAAAHAAEAAAAAAAAAAAAIAAEAAAAAAAAAAAAJAAEAAAAAAAAAAAAKAAEAAAAAAAAAAAALAAEAAAAAAAAAAAAMAAEAAAAAAAAAAAANAAEAAAAAAAAAAAAOAAEAAAAAAAAAAAAOAAIAAAAAAAAAAAAOAAMAAAAAAAAAAAAOAAQAAAAAAAAAAAAOAAUAAAAAAAAAAAAOAAYAAAAAAAAAAAAOAAcAAAAAAAAAAAAOAAgAAAAAAAAAAAAOAAkAAAAAAAAAAAANAAkAAAAAAAAAAAANAAoAAAAAAAAAAAAMAAoAAAAAAAAAAAALAAoAAAAAAAAAAAAKAAoAAAAAAAAAAAAJAAoAAAAAAAAAAAAIAAkAAAAAAAAAAAAHAAkAAAAAAAAAAAAGAAkAAAAAAAAAAAAGAAoAAAAAAAAAAAAHAAoAAAAAAAAAAAAIAAoAAAAAAAAAAAAJAAkAAAAAAAAAAAAIAAgAAAAAAAAAAAAIAAcAAAAAAAAAAAAIAAYAAAAAAAAAAAAIAAUAAAAAAAAAAAAIAAQAAAAAAAAAAAAJAAQAAAAAAAAAAAAJAAMAAAAAAAAAAAAJAAIAAAAAAAAAAAAIAAIAAAAAAAAAAAAIAAMAAAAAAAAAAAAKAAIAAAAAAAAAAAALAAIAAAAAAAAAAAAMAAIAAAAAAAAAAAANAAIAAAAAAAAAAAANAAMAAAAAAAAAAAAMAAMAAAAAAAAAAAAKAAMAAAAAAAAAAAALAAMAAAAAAAAAAAAKAAQAAAAAAAAAAAAKAAUAAAAAAAAAAAAKAAYAAAAAAAAAAAAKAAcAAAAAAAAAAAAKAAgAAAAAAAAAAAAKAAkAAAAAAAAAAAAJAAgAAAAAAAAAAAAJAAcAAAAAAAAAAAAJAAYAAAAAAAAAAAAJAAUAAAAAAAAAAAALAAUAAAAAAAAAAAALAAQAAAAAAAAAAAAMAAQAAAAAAAAAAAANAAQAAAAAAAAAAAANAAUAAAAAAAAAAAANAAYAAAAAAAAAAAANAAcAAAAAAAAAAAANAAgAAAAAAAAAAAAMAAgAAAAAAAAAAAAMAAkAAAAAAAAAAAALAAkAAAAAAAAAAAALAAgAAAAAAAAAAAALAAcAAAAAAAAAAAALAAYAAAAAAAAAAAAMAAUAAAAAAAAAAAAMAAYAAAAAAAAAAAAHAAYAAAAAAAAAAAAHAAUAAAAAAAAAAAAMAAcAAAAAAAAAAAAGAAUAAAAAAAAAAAAFAAUAAAAAAAAAAAAEAAUAAAAAAAAAAAADAAUAAAAAAAAAAAACAAUAAAAAAAAAAAABAAUAAAAAAAAAAAABAAYAAAAAAAAAAAACAAYAAAAAAAAAAAADAAYAAAAAAAAAAAAEAAYAAAAAAAAAAAAFAAYAAAAAAAAAAAAGAAYAAAAAAAAAAAAHAAMAAAAAAAAAAAAHAAIAAAAAAAAAAAAGAAIAAAAAAAAAAAAFAAIAAAAAAAAAAAAEAAIAAAAAAAAAAAADAAIAAAAAAAAAAAABAAMAAAAAAAAAAAACAAMAAAAAAAAAAAADAAMAAAAAAAAAAAAEAAMAAAAAAAAAAAAFAAMAAAAAAAAAAAAGAAMAAAAAAAAAAAAHAAQAAAAAAAAAAAAGAAQAAAAAAAAAAAAFAAQAAAAAAAAAAAAEAAQAAAAAAAAAAAADAAQAAAAAAAAAAAABAAQAAAAAAAAAAAACAAQAAAAAAAAAAAABAAcAAAAAAAAAAAABAAgAAAAAAAAAAAABAAkAAAAAAAAAAAACAAkAAAAAAAAAAAACAAgAAAAAAAAAAAADAAcAAAAAAAAAAAADAAgAAAAAAAAAAAADAAkAAAAAAAAAAAACAAcAAAAAAAAAAAAEAAgAAAAAAAAAAAAEAAkAAAAAAAAAAAAFAAkAAAAAAAAAAAAFAAgAAAAAAAAAAAAFAAcAAAAAAAAAAAAEAAcAAAAAAAAAAAAGAAcAAAAAAAAAAAAHAAcAAAAAAAAAAAAHAAgAAAAAAAAAAAAGAAgAAAAAAAAAAAA=")
+texture = ExtResource("3_g1omr")
+
+[node name="Parallax1" type="Parallax2D" parent="." unique_id=807117439]
+repeat_size = Vector2(1024, 0)
+autoscroll = Vector2(-50, 0)
+repeat_times = 3
+
+[node name="Icons1" type="TileMapLayer" parent="Parallax1" unique_id=663712849]
+modulate = Color(1, 1, 1, 0.5019608)
+scale = Vector2(4, 4)
+tile_map_data = PackedByteArray("AAACAAEAAgAAAAAAAAAFAAkAAgAAAAAAAAAMAAIAAgAAAAAAAAAHAAMAAgABAAAAAAABAAYAAgABAAAAAAAOAAsAAgACAAAAAAANAAQAAgADAAAAAAAFAAEAAgADAAAAAAABAAoAAgAEAAAAAAAJAAUAAgAEAAAAAAALAAkAAgACAAAAAAA=")
 tile_set = SubResource("TileSet_nvwnn")
 
-[node name="TitleLabel" type="Label" parent="Tabletop" unique_id=1976251904]
+[node name="Parallax2" type="Parallax2D" parent="." unique_id=499338121]
+repeat_size = Vector2(1024, 0)
+autoscroll = Vector2(-25, 0)
+repeat_times = 3
+
+[node name="Icons2" type="TileMapLayer" parent="Parallax2" unique_id=702346666]
+modulate = Color(1, 1, 1, 0.2509804)
+scale = Vector2(4, 4)
+tile_map_data = PackedByteArray("AAAKAAoAAgABAAAAAAADAAMAAgABAAAAAAADAAgAAgABAAAAAAAJAAAAAgABAAAAAAAOAAcAAgABAAAAAAAJAAMAAgACAAAAAAAHAAoAAgACAAAAAAABAAIAAgACAAAAAAAGAAcAAgAEAAAAAAAJAAUAAgAEAAAAAAAOAAAAAgAEAAAAAAALAAsAAgAEAAAAAAADAAsAAgADAAAAAAAGAAQAAgADAAAAAAAAAAQAAgADAAAAAAAIAAYAAgAAAAAAAAAOAAQAAgAAAAAAAAAGAAEAAgAAAAAAAAAKAAgAAgACAAAAAAADAAUAAgACAAAAAAAAAAAAAgACAAAAAAA=")
+tile_set = SubResource("TileSet_nvwnn")
+
+[node name="Menu" type="Node2D" parent="." unique_id=1837233499]
+scale = Vector2(4, 4)
+
+[node name="TitleLabel" type="Label" parent="Menu" unique_id=1976251904]
 custom_minimum_size = Vector2(81.615, 0)
 anchors_preset = 10
 anchor_right = 1.0
@@ -43,7 +80,7 @@ text = "Poker Machine Software 9000"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="CreditsLabel" type="Label" parent="Tabletop" unique_id=1111417072]
+[node name="CreditsLabel" type="Label" parent="Menu" unique_id=1111417072]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(81.615, 0)
 anchors_preset = 10
@@ -59,29 +96,29 @@ text = "0 Credits - © ZombieNW 2026"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="CenterContainer" type="CenterContainer" parent="Tabletop" unique_id=2004727897]
+[node name="CenterContainer" type="CenterContainer" parent="Menu" unique_id=2004727897]
 custom_minimum_size = Vector2(208, 148)
 offset_left = 24.0
 offset_top = 24.0
 offset_right = 232.0
 offset_bottom = 172.0
 
-[node name="GridContainer" type="GridContainer" parent="Tabletop/CenterContainer" unique_id=1900080771]
+[node name="GridContainer" type="GridContainer" parent="Menu/CenterContainer" unique_id=1900080771]
 unique_name_in_owner = true
 layout_mode = 2
 columns = 4
 
-[node name="PokerGame1" parent="Tabletop/CenterContainer/GridContainer" unique_id=1676433480 instance=ExtResource("4_wu84c")]
+[node name="PokerGame1" parent="Menu/CenterContainer/GridContainer" unique_id=1676433480 instance=ExtResource("4_wu84c")]
 layout_mode = 2
 game_scene = ExtResource("5_8ln24")
 game_icon = ExtResource("6_6tl50")
 
-[node name="SlotsGame" parent="Tabletop/CenterContainer/GridContainer" unique_id=59327395 instance=ExtResource("4_wu84c")]
+[node name="SlotsGame" parent="Menu/CenterContainer/GridContainer" unique_id=59327395 instance=ExtResource("4_wu84c")]
 layout_mode = 2
 game_scene = ExtResource("8_6at21")
 game_icon = ExtResource("9_og6xe")
 
-[node name="YachtDiceGame" parent="Tabletop/CenterContainer/GridContainer" unique_id=1906682504 instance=ExtResource("4_wu84c")]
+[node name="YachtDiceGame" parent="Menu/CenterContainer/GridContainer" unique_id=1906682504 instance=ExtResource("4_wu84c")]
 layout_mode = 2
 game_scene = ExtResource("10_mvfl2")
 game_icon = ExtResource("11_mvfl2")
